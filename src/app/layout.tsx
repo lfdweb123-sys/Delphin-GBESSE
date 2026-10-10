@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
           <Header name={name} logoUrl={settings?.logoUrl} nav={nav} />
           <main id="contenu">{children}</main>
-          <Footer name={name} logoUrl={settings?.logoUrl} links={links} nav={nav} t={texts} />
+          <Footer name={name} logoUrl={settings?.logoUrl} links={links} nav={nav} t={texts} profile={profile} />
         </TextsProvider>
       </body>
     </html>
