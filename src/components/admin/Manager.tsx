@@ -7,7 +7,7 @@ import DocForm from "./DocForm";
 
 type Row = Record<string, unknown> & { id: string };
 const now = () => new Date().toISOString();
-const clean = (o: Record<string, unknown>) => Object.fromEntries(Object.entries(o).filter(([k, v]) => v !== undefined && k !== "id"));
+const clean = (o: Record<string, unknown>): Record<string, unknown> => Object.fromEntries(Object.entries(o).filter(([k, v]) => v !== undefined && k !== "id"));
 
 /** Éditeur pour les documents uniques (profile/main, settings/main). */
 export function SingleEditor({ section }: { section: Section }) {
@@ -41,7 +41,7 @@ export function CollectionManager({ section }: { section: Section }) {
   }, [rows]);
 
   async function save(d: Record<string, unknown>) {
-    const base = { ...clean(d), updatedAt: now() };
+    const base: Record<string, unknown> = { ...clean(d), updatedAt: now() };
     if (!section.noPublish) { base.status = base.status || "draft"; base.verificationStatus = base.verificationStatus || "verified"; }
     if (editing && editing !== "new") await updateDoc(doc(db, section.collection, editing.id), base);
     else await addDoc(collection(db, section.collection), { ...base, createdAt: now(), _ts: serverTimestamp() });
