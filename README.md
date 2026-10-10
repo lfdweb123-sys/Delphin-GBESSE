@@ -1,6 +1,6 @@
 # Site officiel — Delphin GBESSE
 
-Next.js 14 (App Router) · TypeScript strict · Tailwind CSS · Firebase Auth / Firestore / Storage · Vercel.
+Next.js 14 (App Router) · TypeScript strict · Tailwind CSS · Firebase Auth + Firestore (sans Storage) · Vercel.
 
 Règle de fond : **aucune information n'est inventée**. Tout contenu doit avoir une source ou être saisi par l'administrateur.
 Le public ne voit que les contenus `status = published` **et** `verificationStatus = verified` (appliqué dans le code **et** dans les règles Firestore).
@@ -16,7 +16,7 @@ npm run dev
 1. Console Firebase → créer un projet → ajouter une **application Web** → copier la config dans `.env.local` (`NEXT_PUBLIC_FIREBASE_*`).
 2. **Authentication** → Sign-in method → activer **E-mail/Mot de passe**.
 3. **Firestore Database** → créer en mode production, puis publier `firestore.rules` (onglet Règles, ou `firebase deploy --only firestore:rules`).
-4. **Storage** → activer, puis publier `storage.rules`.
+4. **Pas de Storage** : les images sont compressées (WebP, < 600 Ko) et stockées dans Firestore (collection `images`), puis servies par le site sous `/img/<id>`.
 5. Aucun index composite n'est requis (le tri se fait côté code).
 
 ## 3. Créer le compte administrateur
@@ -40,7 +40,7 @@ Le script valide la structure, vérifie les champs obligatoires, détecte les do
 ## 6. Utilisation du dashboard (`/admin`)
 - **Informations à vérifier** : tout ce qui est `needs_review` (valider, publier, modifier, rejeter, supprimer).
 - **Paramètres → Logo** : si un logo est présent, il s'affiche **seul** (header, drawer mobile, footer) ; sinon le nom « Delphin GBESSE » s'affiche.
-- Les images sont validées (JPEG/PNG/WebP, 10 Mo max), redimensionnées et converties en WebP avant envoi.
+- Les images sont validées (JPEG/PNG/WebP, 15 Mo max), redimensionnées et converties en WebP < 600 Ko avant enregistrement dans Firestore.
 
 ## Tout est modifiable depuis le dashboard
 - **Page d'accueil** : image de bannière, titre, sous-titre, texte, boutons (texte + lien), et pour chaque section : afficher/masquer, titre, texte, bouton « voir tout ».
@@ -54,4 +54,4 @@ Le script valide la structure, vérifie les champs obligatoires, détecte les do
 ## Notes
 - « Entreprises » et « Organisations » partagent la collection `organizations` (champ `kind`).
 - Pas de formulaire de contact : uniquement les coordonnées saisies dans le profil (Appeler / WhatsApp / E-mail).
-- La protection du dashboard côté navigateur est une commodité ; la sécurité réelle repose sur les règles Firestore/Storage.
+- La protection du dashboard côté navigateur est une commodité ; la sécurité réelle repose sur les règles Firestore.

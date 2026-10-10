@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const nav = resolveNav(texts);
   const person = {
     "@context": "https://schema.org", "@type": "Person", name, url: siteUrl(),
-    ...(profile?.photo ? { image: profile.photo } : {}),
+    ...(profile?.photo ? { image: new URL(profile.photo, siteUrl()).href } : {}),
     ...(profile?.shortBio ? { description: profile.shortBio } : {}),
     ...(links.length ? { sameAs: links.map((l) => l.url) } : {}),
   };

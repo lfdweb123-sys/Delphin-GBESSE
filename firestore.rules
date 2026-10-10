@@ -1,25 +1,49 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
     function isAdmin() {
       return request.auth != null &&
         exists(/databases/$(database)/documents/adminUsers/$(request.auth.uid));
     }
-    function isPublic() {
-      return resource.data.status == 'published' && resource.data.verificationStatus == 'verified';
+    function isPublished() {
+      return resource.data.status == 'published' &&
+             resource.data.verificationStatus == 'verified';
     }
-    // Contenus publics : lecture seulement si publié ET vérifié. Écriture : admin uniquement.
+    function isContent(col) {
+      return col in ['profile', 'timeline', 'events', 'activities', 'achievements', 'projects',
+                     'organizations', 'companies', 'news', 'gallery', 'socialLinks', 'settings'];
+    }
+
+    // Contenus du site : le public lit uniquement ce qui est publié ET vérifié.
+    // L'administrateur lit et écrit tout.
     match /{col}/{id} {
-      allow read: if col in ['profile','timeline','events','activities','achievements','projects',
-                              'organizations','companies','news','gallery','socialLinks','settings']
-                     && isPublic();
+      allow read: if isContent(col) && (isPublished() || isAdmin());
+      allow create, update, delete: if isContent(col) && isAdmin();
+    }
+
+    // Images : lecture à l'unité pour tous (le site les sert via /img/<id>),
+    // pas de listage public. Écriture réservée à l'admin, WebP et taille limitées.
+    match /images/{id} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.contentType == 'image/webp'
+        && request.resource.data.data is string
+        && request.resource.data.data.size() < 950000;
+      allow delete: if isAdmin();
+    }
+
+    // Sources : jamais publiques.
+    match /sources/{id} {
       allow read, write: if isAdmin();
     }
-    // Sources et liste des admins : jamais publiques.
-    match /sources/{id} { allow read, write: if isAdmin(); }
+
+    // Liste des administrateurs : chacun ne lit que son propre document.
+    // Aucune écriture depuis le site : création uniquement depuis la console Firebase.
     match /adminUsers/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
-      allow write: if false; // créés uniquement depuis la console Firebase
+      allow write: if false;
     }
   }
 }
