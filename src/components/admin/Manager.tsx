@@ -1,5 +1,6 @@
 "use client";
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import type { Section } from "@/lib/admin-config";
 import { db } from "@/lib/firebase";
@@ -7,7 +8,7 @@ import DocForm from "./DocForm";
 
 type Row = Record<string, unknown> & { id: string };
 const now = () => new Date().toISOString();
-const clean = (o: Record<string, unknown>): Record<string, unknown> => Object.fromEntries(Object.entries(o).filter(([k, v]) => v !== undefined && k !== "id"));
+const clean = (o: Record<string, unknown>): DocumentData => Object.fromEntries(Object.entries(o).filter(([k, v]) => v !== undefined && k !== "id"));
 
 /** Éditeur pour les documents uniques (profile/main, settings/main). */
 export function SingleEditor({ section }: { section: Section }) {
@@ -41,13 +42,13 @@ export function CollectionManager({ section }: { section: Section }) {
   }, [rows]);
 
   async function save(d: Record<string, unknown>) {
-    const base: Record<string, unknown> = { ...clean(d), updatedAt: now() };
+    const base: DocumentData = { ...clean(d), updatedAt: now() };
     if (!section.noPublish) { base.status = base.status || "draft"; base.verificationStatus = base.verificationStatus || "verified"; }
     if (editing && editing !== "new") await updateDoc(doc(db, section.collection, editing.id), base);
     else await addDoc(collection(db, section.collection), { ...base, createdAt: now(), _ts: serverTimestamp() });
     setEditing(null); await load();
   }
-  const patch = async (r: Row, p: Record<string, unknown>) => { await updateDoc(doc(db, section.collection, r.id), { ...p, updatedAt: now() }); await load(); };
+  const patch = async (r: Row, p: DocumentData) => { await updateDoc(doc(db, section.collection, r.id), { ...p, updatedAt: now() }); await load(); };
   const remove = async (r: Row) => { if (confirm("Supprimer définitivement cet élément ?")) { await deleteDoc(doc(db, section.collection, r.id)); await load(); } };
 
   if (editing) return <DocForm section={section} initial={editing === "new" ? { status: "draft", verificationStatus: "verified" } : editing} onSave={save} onCancel={() => setEditing(null)} />;
