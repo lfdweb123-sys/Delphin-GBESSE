@@ -12,6 +12,7 @@ export const revalidate = 60;
 const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const serif = Playfair_Display({ subsets: ["latin"], variable: "--font-serif", display: "swap" });
 const DEFAULT_NAME = "Delphin GBESSE";
+const FALLBACK_ICON = "/favicon.ico";
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#ffffff" };
 
@@ -20,11 +21,17 @@ export async function generateMetadata(): Promise<Metadata> {
   const name = profile?.name || DEFAULT_NAME;
   const title = settings?.siteTitle || name;
   const description = settings?.siteDescription || profile?.shortBio || `Site officiel de ${name}.`;
+  const icon = settings?.logoUrl || FALLBACK_ICON;
   return {
     metadataBase: new URL(siteUrl()),
     title: { default: title, template: `%s | ${name}` },
     description,
     alternates: { canonical: "/" },
+    icons: {
+      icon: [{ url: icon }],
+      shortcut: [{ url: icon }],
+      apple: [{ url: icon }],
+    },
     openGraph: { title, description, url: siteUrl(), siteName: name, type: "website", locale: "fr_FR", images: profile?.photo ? [profile.photo] : undefined },
     twitter: { card: "summary_large_image", title, description },
   };
