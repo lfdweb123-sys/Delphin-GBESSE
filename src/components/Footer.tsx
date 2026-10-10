@@ -8,6 +8,7 @@ import SocialLinks from "./SocialLinks";
 interface Props { name: string; logoUrl?: string; links: SocialLink[]; nav: NavItem[]; t: Texts; profile: Profile | null }
 
 const gold = "transition-colors duration-200 hover:text-gold focus-visible:text-gold focus-visible:outline-gold";
+const labelCls = "block text-xs font-medium uppercase tracking-wide text-gold";
 
 export default function Footer({ name, logoUrl, links, nav, t, profile }: Props) {
   const phone = profile?.phone?.trim();
@@ -27,7 +28,7 @@ export default function Footer({ name, logoUrl, links, nav, t, profile }: Props)
   return (
     <footer className="mt-24 bg-black text-white">
       <div className="h-0.5 bg-gold" aria-hidden="true" />
-      <div className="container-x grid gap-12 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div className="container-x grid gap-12 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div className="space-y-5">
           <Logo logoUrl={logoUrl} name={name} light />
           {t.footer_text && <p className="max-w-sm whitespace-pre-line text-sm leading-6 text-white/70">{t.footer_text}</p>}
@@ -50,11 +51,31 @@ export default function Footer({ name, logoUrl, links, nav, t, profile }: Props)
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t.footer_contact_title}</h2>
           {hasContact && (
-            <ul className="mt-4 space-y-1 text-sm text-white/70">
-              {phone && <li><a href={`tel:${phone.replace(/\s/g, "")}`} className={`inline-block py-1.5 ${gold}`}>{phone}</a></li>}
-              {wa && <li><a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`inline-block py-1.5 ${gold}`}>{t.contact_whatsapp} : {wa}</a></li>}
-              {mail && <li><a href={`mailto:${mail}`} className={`inline-block break-all py-1.5 ${gold}`}>{mail}</a></li>}
-              {location && <li className="py-1.5">{location}</li>}
+            <ul className="mt-4 space-y-4 text-sm text-white/70">
+              {phone && (
+                <li>
+                  <span className={labelCls}>{t.contact_phone_label}</span>
+                  <a href={`tel:${phone.replace(/\s/g, "")}`} className={`mt-1 inline-block ${gold}`}>{phone}</a>
+                </li>
+              )}
+              {wa && (
+                <li>
+                  <span className={labelCls}>{t.contact_whatsapp}</span>
+                  <a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`mt-1 inline-block ${gold}`}>{wa}</a>
+                </li>
+              )}
+              {mail && (
+                <li>
+                  <span className={labelCls}>{t.contact_email_label}</span>
+                  <a href={`mailto:${mail}`} className={`mt-1 inline-block break-all ${gold}`}>{mail}</a>
+                </li>
+              )}
+              {location && (
+                <li>
+                  <span className={labelCls}>{t.label_location}</span>
+                  <span className="mt-1 block leading-6">{location}</span>
+                </li>
+              )}
             </ul>
           )}
         </div>
