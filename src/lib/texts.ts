@@ -90,6 +90,8 @@ export const CHROME_FIELDS: TextField[] = [
   { key: "h_footer", label: "Pied de page", type: "heading" },
   { key: "footer_text", label: "Texte du pied de page", type: "textarea" },
   { key: "footer_copyright", label: "Mention de copyright", type: "text", def: "© {year} {name}", help: "{year} et {name} sont remplacés automatiquement." },
+  { key: "footer_nav_title", label: "Titre de la colonne navigation", type: "text", def: "Navigation" },
+  { key: "footer_contact_title", label: "Titre de la colonne contact", type: "text", def: "Contact" },
   { key: "h_nf", label: "Page introuvable (404)", type: "heading" },
   { key: "nf_title", label: "Titre", type: "text", def: "Page introuvable" },
   { key: "nf_text", label: "Texte", type: "text", def: "Cette page n’existe pas ou n’est plus publiée." },
