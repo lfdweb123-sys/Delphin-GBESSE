@@ -38,7 +38,7 @@ export function ProjectCard({ p }: { p: Project | Achievement }) {
         <h3 className="mt-1 text-lg font-semibold">{p.title}</h3>
         {p.date && <p className="text-sm text-muted">{formatDate(p.date)}</p>}
         {p.description && <p className="mt-3 line-clamp-4 text-sm leading-6 text-muted">{p.description}</p>}
-        {"result" in p && p.result && <p className="mt-3 text-sm"><strong>{t.label_result} :</strong> {p.result}</p>}
+        {p.result && <p className="mt-3 text-sm"><strong>{t.label_result} :</strong> {p.result}</p>}
         <Ext url={p.url} label={t.label_more} />
       </div>
     </article>
