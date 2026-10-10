@@ -16,8 +16,8 @@ const LINKS = [
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const path = usePathname(); const router = useRouter();
   return (
-    <div className="fixed inset-0 z-[60] overflow-auto bg-soft lg:flex">
-      <aside className="border-b border-line bg-white lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r">
+    <div className="fixed inset-0 z-[60] overflow-auto bg-soft lg:flex lg:overflow-hidden">
+      <aside className="border-b border-line bg-white lg:h-full lg:w-64 lg:shrink-0 lg:overflow-y-auto lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between px-4 py-3 lg:block">
           <Link href="/admin" className="font-serif text-lg font-semibold">Administration</Link>
           <div className="flex gap-3 text-sm lg:mt-1"><Link href="/" className="text-muted hover:text-ink">Voir le site</Link>
@@ -30,7 +30,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           ))}
         </nav>
       </aside>
-      <div className="min-w-0 flex-1 p-4 sm:p-8">{children}</div>
+      <div className="min-w-0 flex-1 p-4 sm:p-8 lg:h-full lg:overflow-y-auto">{children}</div>
     </div>
   );
 }
