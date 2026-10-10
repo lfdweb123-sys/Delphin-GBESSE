@@ -1,0 +1,7 @@
+node_modules
+.next
+.env.local
+serviceAccount.json
+*.tsbuildinfo
+next-env.d.ts
+scripts/import/report-*.json

@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/adminUsers/$(request.auth.uid));
+    }
+    function isPublic() {
+      return resource.data.status == 'published' && resource.data.verificationStatus == 'verified';
+    }
+    // Contenus publics : lecture seulement si publié ET vérifié. Écriture : admin uniquement.
+    match /{col}/{id} {
+      allow read: if col in ['profile','timeline','events','activities','achievements','projects',
+                              'organizations','companies','news','gallery','socialLinks','settings']
+                     && isPublic();
+      allow read, write: if isAdmin();
+    }
+    // Sources et liste des admins : jamais publiques.
+    match /sources/{id} { allow read, write: if isAdmin(); }
+    match /adminUsers/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false; // créés uniquement depuis la console Firebase
+    }
+  }
+}

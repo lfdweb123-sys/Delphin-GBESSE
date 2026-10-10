@@ -1,0 +1,41 @@
+{
+  "_readme": "Seules des informations publiques avec source sont importées. Tout ce qui n'a pas pu être confirmé est en needs_review (non publié). Rien n'est inventé.",
+  "profile": {
+    "name": "Delphin GBESSE",
+    "status": "published",
+    "verificationStatus": "verified"
+  },
+  "timeline": [
+    {
+      "title": "Vœux de nouvel an avec les jeunes leaders de Ganvié 2",
+      "description": "Un article de presse (L'investigateur, 24/01/2025) présente Delphin GBESSE comme « Coordonnateur du Bloc Républicain (BR) » lors des vœux de nouvel an avec de jeunes leaders de Ganvié 2, à Abomey-Calavi. Seul le titre et l'extrait ont été lus : à confirmer avec l'article complet (portée exacte de la fonction de coordonnateur).",
+      "date": "2025-01-24",
+      "category": "parcours",
+      "status": "draft",
+      "verificationStatus": "needs_review",
+      "source": {
+        "name": "L'investigateur",
+        "url": "https://linvestigateur.info/",
+        "type": "presse",
+        "publishedAt": "2025-01-24"
+      }
+    }
+  ],
+  "organizations": [
+    {
+      "name": "Bloc Républicain (BR)",
+      "kind": "Organisation",
+      "role": "Coordonnateur (selon un article de presse, à confirmer)",
+      "description": "Parti politique béninois.",
+      "website": "https://www.blocrepublicain.co",
+      "status": "draft",
+      "verificationStatus": "needs_review",
+      "source": {
+        "name": "L'investigateur",
+        "url": "https://linvestigateur.info/",
+        "type": "presse",
+        "publishedAt": "2025-01-24"
+      }
+    }
+  ]
+}
