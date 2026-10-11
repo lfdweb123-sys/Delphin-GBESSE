@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { NavItem } from "@/lib/nav";
 import { tpl, type Texts } from "@/lib/texts";
@@ -5,13 +6,13 @@ import type { Profile, SocialLink } from "@/types";
 import Logo from "./Logo";
 import SocialLinks from "./SocialLinks";
 
-/** `logoUrl` = logo du pied de page (version pour fond noir). Sans logo : le nom s'affiche en blanc. */
-interface Props { name: string; logoUrl?: string; links: SocialLink[]; nav: NavItem[]; t: Texts; profile: Profile | null }
+/** `logoUrl` = logo du pied de page (version pour fond noir). `imageUrl` = image 400 × 400 sous le logo. */
+interface Props { name: string; logoUrl?: string; imageUrl?: string; links: SocialLink[]; nav: NavItem[]; t: Texts; profile: Profile | null }
 
 const gold = "transition-colors duration-200 hover:text-gold focus-visible:text-gold focus-visible:outline-gold";
 const labelCls = "block text-xs font-medium uppercase tracking-wide text-gold";
 
-export default function Footer({ name, logoUrl, links, nav, t, profile }: Props) {
+export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile }: Props) {
   const phone = profile?.phone?.trim();
   const wa = profile?.whatsapp?.trim();
   const mail = profile?.email?.trim();
@@ -32,6 +33,16 @@ export default function Footer({ name, logoUrl, links, nav, t, profile }: Props)
       <div className="container-x grid gap-12 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div className="space-y-5">
           <Logo logoUrl={logoUrl} name={name} light size="footer" />
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              alt={name}
+              width={400}
+              height={400}
+              sizes="(min-width:640px) 400px, 90vw"
+              className="aspect-square w-full max-w-[400px] rounded-xl object-cover"
+            />
+          )}
           {t.footer_text && <p className="max-w-sm whitespace-pre-line text-sm leading-6 text-white/70">{t.footer_text}</p>}
           <SocialLinks links={links} dark />
         </div>
