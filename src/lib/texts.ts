@@ -24,7 +24,8 @@ const PAGES = [
 
 export const HOME_FIELDS: TextField[] = [
   { key: "h1", label: "Bannière d’accueil", type: "heading" },
-  { key: "hero_image", label: "Image de bannière (fond de l’accueil)", type: "image", help: "Optionnelle. Sans image, l’accueil affiche le portrait du profil s’il existe." },
+  { key: "hero_image", label: "Image de bannière (ordinateur et tablette)", type: "image", help: "Optionnelle. Sans image, l’accueil affiche le portrait du profil s’il existe." },
+  { key: "hero_image_mobile", label: "Image de bannière pour mobile", type: "image", help: "Optionnelle. Format vertical ou carré conseillé. Sans elle, l’image principale est utilisée sur mobile." },
   { key: "hero_title", label: "Titre principal", type: "text", help: "Vide = nom du profil." },
   { key: "hero_subtitle", label: "Sous-titre", type: "text", help: "Vide = fonctions du profil." },
   { key: "hero_text", label: "Texte d’introduction", type: "textarea", help: "Vide = biographie courte du profil." },
@@ -37,6 +38,7 @@ export const HOME_FIELDS: TextField[] = [
     { key: `s_${s.k}_show`, label: "Afficher sur l’accueil", type: "select", options: YN, def: "Oui" },
     { key: `s_${s.k}_title`, label: "Titre", type: "text", def: s.title },
     { key: `s_${s.k}_intro`, label: "Texte d’introduction", type: "textarea", def: s.intro ?? "" },
+    ...(s.k === "about" ? [{ key: "about_image", label: "Image à gauche du texte « À propos »", type: "image", help: "Optionnelle. Sans image, le texte occupe toute la largeur." } as TextField] : []),
     ...(s.more ? [{ key: `s_${s.k}_more`, label: "Texte du bouton « voir tout »", type: "text", def: s.more } as TextField] : []),
   ]),
 ];
@@ -46,7 +48,7 @@ export const PAGE_FIELDS: TextField[] = [
     { key: `h_p_${p.k}`, label: `Page « ${p.title} »`, type: "heading" },
     { key: `p_${p.k}_title`, label: "Titre de la page", type: "text", def: p.title },
     { key: `p_${p.k}_intro`, label: "Texte d’introduction", type: "textarea", def: p.intro ?? "" },
-    { key: `p_${p.k}_banner`, label: "Bannière de la page", type: "image" },
+    { key: `p_${p.k}_banner`, label: "Bannière de la page", type: "image", help: "Quand une bannière est définie, elle s’affiche seule (sans texte dessus) ; le titre apparaît en dessous." },
     { key: `p_${p.k}_seo`, label: "Description pour Google (SEO)", type: "textarea" },
   ]),
   { key: "h_collab", label: "Page Collaboration — contenu", type: "heading" },
@@ -71,6 +73,9 @@ export const PAGE_FIELDS: TextField[] = [
   { key: "search_placeholder", label: "Champ de recherche", type: "text", def: "Rechercher un article" },
   { key: "label_all", label: "Filtre « toutes »", type: "text", def: "Toutes" },
   { key: "label_more", label: "Lien « en savoir plus »", type: "text", def: "En savoir plus" },
+  { key: "label_read_more", label: "Bouton « lire plus » (descriptions longues)", type: "text", def: "Lire plus" },
+  { key: "label_read_less", label: "Bouton « voir moins »", type: "text", def: "Voir moins" },
+  { key: "label_read_article", label: "Lien « lire l’article »", type: "text", def: "Lire l’article" },
   { key: "label_website", label: "Lien « site web »", type: "text", def: "Site web" },
   { key: "label_source", label: "Lien « source »", type: "text", def: "Source" },
   { key: "label_result", label: "Libellé « résultat »", type: "text", def: "Résultat" },
