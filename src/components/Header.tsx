@@ -19,8 +19,8 @@ export default function Header({ name, logoUrl, nav }: { name: string; logoUrl?:
 
   return (
     <header className={`sticky top-0 z-40 bg-white transition-shadow ${scrolled ? "border-b border-line shadow-sm" : "border-b border-transparent"}`}>
-      <div className="container-x flex h-16 items-center justify-between gap-4">
-        <Logo logoUrl={logoUrl} name={name} />
+      <div className="container-x flex h-[72px] items-center justify-between gap-4 sm:h-20">
+        <Logo logoUrl={logoUrl} name={name} size="header" />
         <nav aria-label="Navigation principale" className="hidden items-center gap-5 xl:flex">
           {nav.filter((n) => n.key !== "home").map((n) => (
             <Link key={n.key} href={n.href} className="text-sm text-muted transition-colors hover:text-ink">{n.label}</Link>
