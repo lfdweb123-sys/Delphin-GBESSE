@@ -5,6 +5,7 @@ import type { Profile, SocialLink } from "@/types";
 import Logo from "./Logo";
 import SocialLinks from "./SocialLinks";
 
+/** `logoUrl` = logo du pied de page (version pour fond noir). Sans logo : le nom s'affiche en blanc. */
 interface Props { name: string; logoUrl?: string; links: SocialLink[]; nav: NavItem[]; t: Texts; profile: Profile | null }
 
 const gold = "transition-colors duration-200 hover:text-gold focus-visible:text-gold focus-visible:outline-gold";
@@ -30,7 +31,7 @@ export default function Footer({ name, logoUrl, links, nav, t, profile }: Props)
       <div className="h-0.5 bg-gold" aria-hidden="true" />
       <div className="container-x grid gap-12 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div className="space-y-5">
-          <Logo logoUrl={logoUrl} name={name} light />
+          <Logo logoUrl={logoUrl} name={name} light size="footer" />
           {t.footer_text && <p className="max-w-sm whitespace-pre-line text-sm leading-6 text-white/70">{t.footer_text}</p>}
           <SocialLinks links={links} dark />
         </div>
