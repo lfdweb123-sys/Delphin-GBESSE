@@ -33,6 +33,8 @@ export default async function Home() {
   const heroSub = t.hero_subtitle || profile?.roles;
   const heroText = t.hero_text || profile?.shortBio;
   const banner = t.hero_image;
+  const bannerMobile = t.hero_image_mobile;
+  const aboutImage = t.about_image;
   const link = (href: string) => /^https?:\/\//.test(href) ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const buttons = (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -45,7 +47,8 @@ export default async function Home() {
     <>
       {banner ? (
         <section className="relative isolate overflow-hidden bg-ink text-white">
-          <Image src={banner} alt="" fill priority sizes="100vw" className="-z-10 object-cover opacity-60" />
+          {bannerMobile && <Image src={bannerMobile} alt="" fill sizes="100vw" className="-z-10 object-cover opacity-60 md:hidden" />}
+          <Image src={banner} alt="" fill sizes="100vw" className={`-z-10 object-cover opacity-60 ${bannerMobile ? "hidden md:block" : ""}`} />
           <div className="container-x animate-up py-20 sm:py-28 md:py-36">
             <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">{heroTitle}</h1>
             {heroSub && <p className="mt-4 max-w-2xl text-lg text-white/90">{heroSub}</p>}
@@ -61,15 +64,28 @@ export default async function Home() {
             {heroText && <p className="mt-6 max-w-xl whitespace-pre-line leading-7 text-muted">{heroText}</p>}
             {buttons}
           </div>
-          {profile?.photo && <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-2xl border border-line sm:max-w-sm"><Image src={profile.photo} alt={`Portrait de ${name}`} fill priority sizes="(min-width:768px) 30vw, 80vw" className="object-cover" /></div>}
+          {profile?.photo && (
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-2xl border border-line sm:max-w-sm">
+              <Image src={profile.photo} alt={`Portrait de ${name}`} fill priority sizes="(min-width:768px) 30vw, 80vw" className="object-cover" />
+            </div>
+          )}
         </section>
       )}
 
-      {on("about") && (profile?.presentation || profile?.fullBio) && sec("about", "a-propos", "soft", <>
-        <div className="prose-plain max-w-3xl whitespace-pre-line text-muted">{profile.presentation || profile.fullBio}</div>
-        {profile.domains && <p className="mt-6 text-sm"><strong>{t.label_domains} :</strong> {profile.domains}</p>}
-        {profile.location && <p className="mt-2 text-sm"><strong>{t.label_location} :</strong> {profile.location}</p>}
-      </>)}
+      {on("about") && (profile?.presentation || profile?.fullBio || aboutImage) && sec("about", "a-propos", "soft",
+        <div className={`grid items-start gap-8 md:gap-12 ${aboutImage ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
+          {aboutImage && (
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line md:mx-0 md:max-w-none">
+              <Image src={aboutImage} alt={`À propos — ${name}`} fill sizes="(min-width:768px) 40vw, 90vw" className="object-cover" />
+            </div>
+          )}
+          <div>
+            <div className="prose-plain max-w-3xl whitespace-pre-line text-muted">{profile?.presentation || profile?.fullBio}</div>
+            {profile?.domains && <p className="mt-6 text-sm"><strong>{t.label_domains} :</strong> {profile.domains}</p>}
+            {profile?.location && <p className="mt-2 text-sm"><strong>{t.label_location} :</strong> {profile.location}</p>}
+          </div>
+        </div>
+      )}
       {on("responsibilities") && profile?.responsibilities && sec("responsibilities", undefined, "white", <p className="max-w-3xl whitespace-pre-line leading-7 text-muted">{profile.responsibilities}</p>)}
       {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><Timeline items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
       {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><div className={grid}>{[...achievements].sort(byDateDesc).slice(0, 3).map((a) => <ProjectCard key={a.id} p={a} />)}</div>{more("achievements", "/realisations")}</>)}
