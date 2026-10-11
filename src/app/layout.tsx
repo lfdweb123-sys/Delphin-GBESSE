@@ -37,13 +37,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [profile, settings, links, texts] = await Promise.all([getProfile(), getSettings(), getPublic<SocialLink>("socialLinks"), getTexts()]);
   const name = profile?.name || DEFAULT_NAME;
   const nav = resolveNav(texts);
   // Deux logos distincts : en-tête/menu (fond blanc) et pied de page (fond noir).
   const headerLogo = settings?.logoUrl;
-  const footerLogo = typeof settings?.logoFooterUrl === "string" && settings.logoFooterUrl ? settings.logoFooterUrl : undefined;
+  const footerLogo = str(settings?.logoFooterUrl);
+  const footerImage = str(settings?.footerImageUrl);
   const person = {
     "@context": "https://schema.org", "@type": "Person", name, url: siteUrl(),
     ...(profile?.photo ? { image: new URL(profile.photo, siteUrl()).href } : {}),
@@ -58,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
           <Header name={name} logoUrl={headerLogo} nav={nav} />
           <main id="contenu">{children}</main>
-          <Footer name={name} logoUrl={footerLogo} links={links} nav={nav} t={texts} profile={profile} />
+          <Footer name={name} logoUrl={footerLogo} imageUrl={footerImage} links={links} nav={nav} t={texts} profile={profile} />
         </TextsProvider>
       </body>
     </html>
