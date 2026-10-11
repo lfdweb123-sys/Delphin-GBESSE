@@ -86,12 +86,7 @@ export default async function Home() {
             )}
             {profile?.domains && <p className="mt-6 text-sm"><strong>{t.label_domains} :</strong> {profile.domains}</p>}
             {profile?.location && <p className="mt-2 text-sm"><strong>{t.label_location} :</strong> {profile.location}</p>}
-            {responsibilities && (
-              <div className="mt-6 max-w-3xl">
-                <p className="text-sm font-semibold">{t.label_responsibilities} :</p>
-                <p className="mt-1 whitespace-pre-line text-sm leading-6 text-muted">{responsibilities}</p>
-              </div>
-            )}
+            {responsibilities && <p className="mt-2 whitespace-pre-line text-sm"><strong>{t.label_responsibilities} :</strong> {responsibilities}</p>}
           </div>
         </div>
       )}
