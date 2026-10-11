@@ -35,6 +35,7 @@ export default async function Home() {
   const banner = t.hero_image;
   const bannerMobile = t.hero_image_mobile;
   const aboutImage = t.about_image;
+  const responsibilities = profile?.responsibilities?.trim();
   const link = (href: string) => /^https?:\/\//.test(href) ? { href, target: "_blank", rel: "noopener noreferrer" } : { href };
   const buttons = (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -72,7 +73,7 @@ export default async function Home() {
         </section>
       )}
 
-      {on("about") && (profile?.presentation || profile?.fullBio || aboutImage) && sec("about", "a-propos", "soft",
+      {on("about") && (profile?.presentation || profile?.fullBio || aboutImage || responsibilities) && sec("about", "a-propos", "soft",
         <div className={`grid items-start gap-8 md:gap-12 ${aboutImage ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
           {aboutImage && (
             <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line md:mx-0 md:max-w-none">
@@ -80,13 +81,20 @@ export default async function Home() {
             </div>
           )}
           <div>
-            <div className="prose-plain max-w-3xl whitespace-pre-line text-muted">{profile?.presentation || profile?.fullBio}</div>
+            {(profile?.presentation || profile?.fullBio) && (
+              <div className="prose-plain max-w-3xl whitespace-pre-line text-muted">{profile.presentation || profile.fullBio}</div>
+            )}
             {profile?.domains && <p className="mt-6 text-sm"><strong>{t.label_domains} :</strong> {profile.domains}</p>}
             {profile?.location && <p className="mt-2 text-sm"><strong>{t.label_location} :</strong> {profile.location}</p>}
+            {responsibilities && (
+              <div className="mt-6 max-w-3xl">
+                <p className="text-sm font-semibold">{t.label_responsibilities} :</p>
+                <p className="mt-1 whitespace-pre-line text-sm leading-6 text-muted">{responsibilities}</p>
+              </div>
+            )}
           </div>
         </div>
       )}
-      {on("responsibilities") && profile?.responsibilities && sec("responsibilities", undefined, "white", <p className="max-w-3xl whitespace-pre-line leading-7 text-muted">{profile.responsibilities}</p>)}
       {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><Timeline items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
       {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><div className={grid}>{[...achievements].sort(byDateDesc).slice(0, 3).map((a) => <ProjectCard key={a.id} p={a} />)}</div>{more("achievements", "/realisations")}</>)}
       {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><div className={grid}>{[...activities].sort(byDateDesc).slice(0, 3).map((a) => <ProjectCard key={a.id} p={a} />)}</div>{more("activities", "/activites")}</>)}
