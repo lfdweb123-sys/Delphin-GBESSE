@@ -6,7 +6,7 @@ export type Texts = Record<string, string>;
 const YN = ["Oui", "Non"];
 
 const SECTIONS = [
-  { k: "about", title: "À propos" }, { k: "responsibilities", title: "Responsabilités" },
+  { k: "about", title: "À propos" },
   { k: "timeline", title: "Parcours", more: "Voir tout le parcours" }, { k: "achievements", title: "Réalisations", more: "Toutes les réalisations" },
   { k: "activities", title: "Activités récentes", more: "Toutes les activités" }, { k: "events", title: "Événements", more: "Tous les événements" },
   { k: "projects", title: "Projets" }, { k: "organizations", title: "Organisations" },
@@ -38,7 +38,7 @@ export const HOME_FIELDS: TextField[] = [
     { key: `s_${s.k}_show`, label: "Afficher sur l’accueil", type: "select", options: YN, def: "Oui" },
     { key: `s_${s.k}_title`, label: "Titre", type: "text", def: s.title },
     { key: `s_${s.k}_intro`, label: "Texte d’introduction", type: "textarea", def: s.intro ?? "" },
-    ...(s.k === "about" ? [{ key: "about_image", label: "Image à gauche du texte « À propos »", type: "image", help: "Optionnelle. Sans image, le texte occupe toute la largeur." } as TextField] : []),
+    ...(s.k === "about" ? [{ key: "about_image", label: "Image à gauche du texte « À propos »", type: "image", help: "Optionnelle. Sans image, le texte occupe toute la largeur. Les responsabilités du profil s’affichent dans cette section, sous la localisation." } as TextField] : []),
     ...(s.more ? [{ key: `s_${s.k}_more`, label: "Texte du bouton « voir tout »", type: "text", def: s.more } as TextField] : []),
   ]),
 ];
@@ -81,6 +81,7 @@ export const PAGE_FIELDS: TextField[] = [
   { key: "label_result", label: "Libellé « résultat »", type: "text", def: "Résultat" },
   { key: "label_domains", label: "Libellé « domaines d’activité »", type: "text", def: "Domaines d’activité" },
   { key: "label_location", label: "Libellé « localisation »", type: "text", def: "Localisation" },
+  { key: "label_responsibilities", label: "Libellé « responsabilités » (section À propos)", type: "text", def: "Responsabilités" },
   { key: "label_prev", label: "Pagination — précédent", type: "text", def: "Précédent" },
   { key: "label_next", label: "Pagination — suivant", type: "text", def: "Suivant" },
   { key: "label_back_news", label: "Retour aux actualités", type: "text", def: "Retour aux actualités" },
