@@ -7,7 +7,7 @@ import { useT } from "./TextsProvider";
 
 /**
  * Parcours : une carte par étape, année en grand à gauche (desktop) ou au-dessus (mobile).
- * Si l'étape a une image, elle s'affiche à gauche du texte, comme dans « À propos ».
+ * L'image (si elle existe) est à gauche du texte, à taille FIXE : elle ne grandit pas avec « Lire plus ».
  */
 export default function Timeline({ items }: { items: TimelineEntry[] }) {
   const t = useT();
@@ -23,13 +23,13 @@ export default function Timeline({ items }: { items: TimelineEntry[] }) {
             </div>
 
             <article className="card self-start overflow-hidden border-t-2 border-t-gold">
-              <div className={`grid items-stretch ${x.image ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
+              <div className={`grid items-start ${x.image ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
                 {x.image && (
-                  <div className="relative aspect-[4/3] bg-soft md:aspect-auto md:min-h-[16rem]">
+                  <div className="relative aspect-[4/3] w-full self-start overflow-hidden bg-soft md:aspect-[4/5]">
                     <Image src={x.image} alt={x.title} fill sizes="(min-width:768px) 30vw, 100vw" className="object-cover" />
                   </div>
                 )}
-                <div className="p-5 sm:p-7">
+                <div className="min-w-0 p-5 sm:p-7">
                   {x.category && <p className="text-xs font-medium uppercase tracking-wide text-accent">{x.category}</p>}
                   <h3 className="mt-1 font-serif text-2xl font-semibold leading-snug">{x.title}</h3>
                   {x.description && (
