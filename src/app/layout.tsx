@@ -41,6 +41,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const [profile, settings, links, texts] = await Promise.all([getProfile(), getSettings(), getPublic<SocialLink>("socialLinks"), getTexts()]);
   const name = profile?.name || DEFAULT_NAME;
   const nav = resolveNav(texts);
+  // Deux logos distincts : en-tête/menu (fond blanc) et pied de page (fond noir).
+  const headerLogo = settings?.logoUrl;
+  const footerLogo = typeof settings?.logoFooterUrl === "string" && settings.logoFooterUrl ? settings.logoFooterUrl : undefined;
   const person = {
     "@context": "https://schema.org", "@type": "Person", name, url: siteUrl(),
     ...(profile?.photo ? { image: new URL(profile.photo, siteUrl()).href } : {}),
@@ -53,9 +56,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <TextsProvider texts={texts}>
           <a href="#contenu" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">Aller au contenu</a>
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
-          <Header name={name} logoUrl={settings?.logoUrl} nav={nav} />
+          <Header name={name} logoUrl={headerLogo} nav={nav} />
           <main id="contenu">{children}</main>
-          <Footer name={name} logoUrl={settings?.logoUrl} links={links} nav={nav} t={texts} profile={profile} />
+          <Footer name={name} logoUrl={footerLogo} links={links} nav={nav} t={texts} profile={profile} />
         </TextsProvider>
       </body>
     </html>
