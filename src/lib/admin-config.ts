@@ -54,6 +54,7 @@ export const SECTIONS: Section[] = [
   { slug: "parametres", label: "Paramètres", collection: "settings", titleKey: "siteTitle", single: true, fields: [
     { key: "logoUrl", label: "Logo de l’en-tête et du menu (version pour fond blanc)", type: "image", help: "Affiché seul, à la place du nom. Sans logo, le nom s’affiche automatiquement." },
     { key: "logoFooterUrl", label: "Logo du pied de page (version pour fond noir)", type: "image", help: "Utilisez une version claire ou blanche. Sans logo, le nom s’affiche en blanc." },
+    { key: "footerImageUrl", label: "Image sous le logo du pied de page (400 × 400 px)", type: "image", help: "Optionnelle. Format carré conseillé, 400 × 400 px minimum. Elle s’affiche en 400 × 400 maximum." },
     { key: "siteTitle", label: "Titre du site (SEO)", type: "text" }, { key: "siteDescription", label: "Description du site (SEO)", type: "textarea" }] },
 ];
 export const REVIEWABLE = SECTIONS.filter((s) => !s.noPublish && !s.single);
