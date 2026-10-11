@@ -23,7 +23,7 @@ export const SECTIONS: Section[] = [
     { key: "domains", label: "Domaines d’activité", type: "text" }, { key: "phone", label: "Téléphone", type: "text" },
     { key: "whatsapp", label: "WhatsApp (format international, ex. +229…)", type: "text" }, { key: "email", label: "Adresse e-mail", type: "text" },
   ] },
-  { slug: "textes-accueil", label: "Page d’accueil (textes, bannière)", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(HOME_FIELDS) },
+  { slug: "textes-accueil", label: "Page d’accueil (textes, bannières)", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(HOME_FIELDS) },
   { slug: "textes-pages", label: "Pages (titres, bannières, libellés)", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(PAGE_FIELDS) },
   { slug: "textes-menu", label: "Menu, pied de page, page 404", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(CHROME_FIELDS) },
   { slug: "parcours", label: "Parcours", collection: "timeline", titleKey: "title", fields: [{ ...title }, { ...date, required: true }, desc, category, image, url] },
@@ -52,7 +52,8 @@ export const SECTIONS: Section[] = [
     { key: "publishedAt", label: "Publiée le", type: "date" }, { key: "collectedAt", label: "Collectée le", type: "date" },
     { key: "verificationStatus", label: "Statut de vérification", type: "select", options: ["verified", "needs_review"] }] },
   { slug: "parametres", label: "Paramètres", collection: "settings", titleKey: "siteTitle", single: true, fields: [
-    { key: "logoUrl", label: "Logo (affiché seul, à la place du nom)", type: "image", help: "Sans logo, le nom s’affiche automatiquement." },
+    { key: "logoUrl", label: "Logo de l’en-tête et du menu (version pour fond blanc)", type: "image", help: "Affiché seul, à la place du nom. Sans logo, le nom s’affiche automatiquement." },
+    { key: "logoFooterUrl", label: "Logo du pied de page (version pour fond noir)", type: "image", help: "Utilisez une version claire ou blanche. Sans logo, le nom s’affiche en blanc." },
     { key: "siteTitle", label: "Titre du site (SEO)", type: "text" }, { key: "siteDescription", label: "Description du site (SEO)", type: "textarea" }] },
 ];
 export const REVIEWABLE = SECTIONS.filter((s) => !s.noPublish && !s.single);
