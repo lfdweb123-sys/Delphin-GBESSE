@@ -12,7 +12,7 @@ export const SEED_IMAGES: SeedImage[] = [
   "svc-import-export", "svc-materiaux", "svc-quincaillerie", "svc-bois", "svc-revetement", "svc-assainissement", "svc-machines",
   "news-independance", "news-bacheliers", "news-conseiller", "news-candidat", "news-rentree", "news-dgiz", "news-debut-semaine",
   "news-fete-travail", "news-mi-semaine", "news-hommage-leader", "news-hommage-engage", "news-communaute-lacustre",
-  "gal-bureau-1", "gal-bureau-2", "gal-bureau-3", "gal-ceremonie", "gal-chantier", "gal-rencontre-partenaire", "gal-reunion-affaires",
+  "gal-bureau-1", "gal-bureau-2", "gal-bureau-3", "gal-ceremonie", "gal-chantier", "gal-rencontre-partenaire", "gal-reunion-affaires", "gal-portrait-costume",
   "logo-gbedel",
 ].map((key) => ({ key, file: `/seed/${key}.webp` }));
 
@@ -51,6 +51,7 @@ export const SEED_GALLERY: SeedDoc[] = [
   { id: "gal-chantier", data: { image: IMG("gal-chantier"), alt: "Delphin GBESSE dans le bureau d’un site de chantier", title: "Sur site", category: "Entreprise" } },
   { id: "gal-rencontre-partenaire", data: { image: IMG("gal-rencontre-partenaire"), alt: "Delphin GBESSE devant un magasin lors d’une rencontre avec un partenaire", title: "Rencontre avec un partenaire", category: "Entreprise" } },
   { id: "gal-reunion-affaires", data: { image: IMG("gal-reunion-affaires"), alt: "Delphin GBESSE en réunion d’affaires dans un magasin de peinture", title: "Réunion d’affaires", category: "Entreprise" } },
+  { id: "gal-portrait-costume", data: { image: IMG("gal-portrait-costume"), alt: "Portrait de Delphin GBESSE en costume bleu marine, souriant", title: "Portrait", category: "Portraits" } },
   { id: "gal-ceremonie", data: { image: IMG("gal-ceremonie"), alt: "Délégation d’élus en écharpe aux couleurs nationales saluant des invités lors d’une cérémonie", title: "Cérémonie officielle", category: "Événements" } },
 ];
 
