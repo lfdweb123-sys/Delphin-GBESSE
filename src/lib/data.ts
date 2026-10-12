@@ -46,6 +46,8 @@ export async function getTexts(): Promise<Texts> {
   } catch (e) { console.error("[data] lecture des textes impossible", e); return DEFAULTS; }
 }
 
+export const byOrder = <T extends { order?: number | string; title?: string }>(a: T, b: T) =>
+  (Number(a.order) || 999) - (Number(b.order) || 999) || (a.title ?? "").localeCompare(b.title ?? "");
 export const byDateDesc = <T extends { date?: string }>(a: T, b: T) => (b.date ?? "").localeCompare(a.date ?? "");
 export const byDateAsc = <T extends { date?: string }>(a: T, b: T) => (a.date ?? "").localeCompare(b.date ?? "");
 

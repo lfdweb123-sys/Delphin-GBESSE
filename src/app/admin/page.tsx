@@ -7,7 +7,7 @@ import { db } from "@/lib/firebase";
 
 const STATS = [
   { label: "Événements", col: "events" }, { label: "Réalisations", col: "achievements" }, { label: "Articles", col: "news" },
-  { label: "Projets", col: "projects" }, { label: "Photos", col: "gallery" }, { label: "Sources", col: "sources" },
+  { label: "Services", col: "activities" }, { label: "Photos", col: "gallery" }, { label: "Sources", col: "sources" },
 ];
 
 export default function Dashboard() {

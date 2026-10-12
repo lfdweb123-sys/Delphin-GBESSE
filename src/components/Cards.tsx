@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
-import type { Achievement, EventItem, NewsItem, Organization, Project } from "@/types";
+import type { Achievement, Activity, EventItem, NewsItem, Organization, Project } from "@/types";
 import ExpandableText from "./ExpandableText";
 import { useT } from "./TextsProvider";
 
@@ -43,6 +43,28 @@ export function ProjectCard({ p }: { p: Project | Achievement }) {
         {p.description && <div className="mt-3"><ExpandableText text={p.description} className="text-sm leading-6 text-muted" /></div>}
         {result && <p className="mt-3 text-sm"><strong>{t.label_result} :</strong> {result}</p>}
         <Ext url={p.url} label={t.label_more} />
+      </div>
+    </article>
+  );
+}
+/** Service : image à côté du texte (empilée sur mobile) + bouton d'appel à l'action vers la page contact. */
+export function ServiceCard({ s }: { s: Activity }) {
+  const t = useT();
+  const href = s.url || "/contact";
+  const ext = /^https?:\/\//.test(href);
+  return (
+    <article className="card flex flex-col overflow-hidden md:flex-row">
+      {s.image && (
+        <div className="relative aspect-[4/3] w-full shrink-0 bg-soft md:aspect-auto md:min-h-[15rem] md:w-2/5">
+          <Image src={s.image} alt={s.title} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col justify-center p-5 sm:p-7">
+        <h3 className="font-serif text-xl font-semibold sm:text-2xl">{s.title}</h3>
+        {s.description && <p className="mt-3 whitespace-pre-line text-sm leading-6 text-muted">{s.description}</p>}
+        <div className="mt-5">
+          <Link href={href} className="btn btn-primary" {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{t.label_service_cta}</Link>
+        </div>
       </div>
     </article>
   );

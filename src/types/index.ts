@@ -35,7 +35,8 @@ export interface SiteSettings extends BaseDoc {
 export interface TimelineEntry extends BaseDoc { title: string; date: string; description?: string; category?: string; image?: string; url?: string; }
 export interface EventItem extends BaseDoc { title: string; description?: string; date: string; endDate?: string; time?: string; location?: string; image?: string; participants?: string; url?: string; }
 export interface Achievement extends BaseDoc { title: string; description?: string; date?: string; category?: string; image?: string; result?: string; url?: string; }
-export interface Activity extends BaseDoc { title: string; description?: string; date?: string; category?: string; image?: string; url?: string; }
+/** Service proposé (collection `activities`). `order` : ordre d'affichage (1, 2, 3…). `url` : lien du bouton (vide = page contact). */
+export interface Activity extends BaseDoc { title: string; description?: string; order?: number | string; image?: string; url?: string; }
 export interface Project extends BaseDoc { title: string; description?: string; date?: string; category?: string; image?: string; result?: string; url?: string; }
 export interface Organization extends BaseDoc { name: string; description?: string; role?: string; period?: string; logo?: string; website?: string; }
 export interface NewsItem extends BaseDoc { title: string; slug: string; content?: string; image?: string; date: string; author?: string; category?: string; }

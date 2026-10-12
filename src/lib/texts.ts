@@ -8,15 +8,15 @@ const YN = ["Oui", "Non"];
 const SECTIONS = [
   { k: "about", title: "À propos" },
   { k: "timeline", title: "Parcours", more: "Voir tout le parcours" }, { k: "achievements", title: "Réalisations", more: "Toutes les réalisations" },
-  { k: "activities", title: "Activités récentes", more: "Toutes les activités" }, { k: "events", title: "Événements", more: "Tous les événements" },
-  { k: "projects", title: "Projets" }, { k: "organizations", title: "Organisations" },
+  { k: "activities", title: "Services", more: "Tous les services" }, { k: "events", title: "Événements", more: "Tous les événements" },
+  { k: "organizations", title: "Organisations" },
   { k: "news", title: "Actualités", more: "Toutes les actualités" }, { k: "gallery", title: "Galerie", more: "Voir la galerie" },
   { k: "socials", title: "Réseaux sociaux" },
   { k: "collaboration", title: "Collaboration", intro: "Entreprises, organisations, institutions, médias et partenaires : prenez contact pour échanger sur une collaboration." },
   { k: "contact", title: "Contact" },
 ];
 const PAGES = [
-  { k: "parcours", title: "Parcours" }, { k: "realisations", title: "Réalisations" }, { k: "activites", title: "Activités" },
+  { k: "parcours", title: "Parcours" }, { k: "realisations", title: "Réalisations" }, { k: "services", title: "Services" },
   { k: "evenements", title: "Événements" }, { k: "actualites", title: "Actualités" }, { k: "galerie", title: "Galerie" },
   { k: "collaboration", title: "Collaboration", intro: "Cette page s’adresse à toute structure souhaitant échanger sur une collaboration ou une opportunité de partenariat." },
   { k: "contact", title: "Contact" },
@@ -73,6 +73,7 @@ export const PAGE_FIELDS: TextField[] = [
   { key: "search_placeholder", label: "Champ de recherche", type: "text", def: "Rechercher un article" },
   { key: "label_all", label: "Filtre « toutes »", type: "text", def: "Toutes" },
   { key: "label_more", label: "Lien « en savoir plus »", type: "text", def: "En savoir plus" },
+  { key: "label_service_cta", label: "Bouton des services (vers la page contact)", type: "text", def: "Nous contacter" },
   { key: "label_read_more", label: "Bouton « lire plus » (descriptions longues)", type: "text", def: "Lire plus" },
   { key: "label_read_less", label: "Bouton « voir moins »", type: "text", def: "Voir moins" },
   { key: "label_read_article", label: "Lien « lire l’article »", type: "text", def: "Lire l’article" },

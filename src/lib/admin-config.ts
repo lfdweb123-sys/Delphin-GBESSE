@@ -30,9 +30,9 @@ export const SECTIONS: Section[] = [
   { slug: "evenements", label: "Événements", collection: "events", titleKey: "title", fields: [
     title, desc, { ...date, required: true }, { key: "endDate", label: "Date de fin", type: "date" }, { key: "time", label: "Heure", type: "text" },
     { key: "location", label: "Lieu", type: "text" }, image, { key: "participants", label: "Participants", type: "textarea" }, url] },
-  { slug: "activites", label: "Activités", collection: "activities", titleKey: "title", fields: [title, desc, date, category, image, url] },
+  { slug: "services", label: "Services", collection: "activities", titleKey: "title", fields: [title, desc, { key: "order", label: "Ordre d’affichage (1, 2, 3…)", type: "text" }, image,
+    { key: "url", label: "Lien du bouton (vide = page contact)", type: "url" }] },
   { slug: "realisations", label: "Réalisations", collection: "achievements", titleKey: "title", fields: [title, desc, date, category, image, { key: "result", label: "Résultat", type: "text" }, url] },
-  { slug: "projets", label: "Projets", collection: "projects", titleKey: "title", fields: [title, desc, date, category, image, url] },
   { slug: "organisations", label: "Entreprises / Organisations", collection: "organizations", titleKey: "name", fields: [
     { key: "name", label: "Nom", type: "text", required: true }, { key: "kind", label: "Type", type: "select", options: ["Organisation", "Entreprise"] },
     { key: "logo", label: "Logo", type: "image" }, desc, { key: "role", label: "Rôle", type: "text" }, { key: "period", label: "Période", type: "text" },

@@ -10,6 +10,7 @@ const LINKS = [
   ...SECTIONS.filter((s) => s.slug !== "sources" && s.slug !== "parametres").map((s) => ({ href: `/admin/${s.slug}`, label: s.label })),
   { href: "/admin/sources", label: "Sources" },
   { href: "/admin/review", label: "Informations à vérifier" },
+  { href: "/admin/import", label: "Import initial des contenus" },
   { href: "/admin/parametres", label: "Paramètres" },
 ];
 
