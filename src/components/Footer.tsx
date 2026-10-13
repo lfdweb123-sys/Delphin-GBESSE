@@ -94,7 +94,11 @@ export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile
       </div>
 
       <div className="border-t border-white/10 px-5 py-6 text-center text-xs text-white/60">
-        {tpl(t.footer_copyright, { year: new Date().getFullYear(), name })}
+        <p>{tpl(t.footer_copyright, { year: new Date().getFullYear(), name })}</p>
+        <p className="mt-2">
+          Développé par :{" "}
+          <a href="https://www.lfdweb.com/" target="_blank" rel="noopener noreferrer" className="font-medium text-gold underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">LFD WEB</a>
+        </p>
       </div>
     </footer>
   );
