@@ -2,7 +2,7 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "@/lib/firebase";
-import { GENERIC_DOCS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
+import { GENERIC_DOCS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_MATERIELS, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
 
 const imageId = (key: string) => `seed${key.replace(/[^A-Za-z0-9]/g, "")}`;
 const norm = (v: unknown) => String(v ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -13,6 +13,7 @@ const toBase64 = (b: Blob): Promise<string> =>
 const GROUPS: { label: string; col: string; docs: SeedDoc[]; merge?: boolean }[] = [
   // Services : fusion, pour conserver les images déjà mises en place depuis le dashboard.
   { label: "Services", col: "activities", docs: SEED_SERVICES, merge: true },
+  { label: "Matériels", col: "achievements", docs: SEED_MATERIELS, merge: true },
   { label: "Entreprise", col: "organizations", docs: SEED_ORGANIZATIONS },
   { label: "Parcours", col: "timeline", docs: SEED_TIMELINE },
   { label: "Articles", col: "news", docs: SEED_NEWS },
@@ -95,7 +96,7 @@ export default function ImportPage() {
     <div className="max-w-2xl">
       <h1 className="mb-2 font-serif text-3xl font-semibold">Import initial des contenus</h1>
       <p className="mb-4 text-sm text-muted">
-        Ce script s’exécute dans votre navigateur (aucune commande). Il ajoute aussi les événements existants aux actualités. Il enregistre dans Firestore : {SEED_SERVICES.length} services, {SEED_NEWS.length} articles avec leur photo,
+        Ce script s’exécute dans votre navigateur (aucune commande). Il ajoute aussi les événements existants aux actualités. Il enregistre dans Firestore : {SEED_SERVICES.length} services, {SEED_MATERIELS.length} matériels, {SEED_NEWS.length} articles avec leur photo,
         {" "}{SEED_GALLERY.length} photos de galerie, l’entreprise GBEDEL et une entrée de parcours. Le profil et le texte d’accueil sont réécrits pour ne parler que de la personne (l’entreprise reste dans « Services » et « Organisations »). Tout est publié et vérifié, donc visible sur le site (≤ 1 minute).
       </p>
       <p className="mb-6 text-sm text-muted">Relancer l’import met à jour les mêmes éléments (pas de doublons) mais écrase les modifications faites sur eux depuis le dashboard.</p>

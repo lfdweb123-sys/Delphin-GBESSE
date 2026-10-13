@@ -13,6 +13,10 @@ export const SEED_IMAGES: SeedImage[] = [
   "news-fete-travail", "news-mi-semaine", "news-hommage-leader", "news-hommage-engage", "news-communaute-lacustre",
   "gal-bureau-1", "gal-bureau-2", "gal-bureau-3", "gal-ceremonie", "gal-chantier", "gal-rencontre-partenaire", "gal-reunion-affaires", "gal-portrait-costume",
   "logo-gbedel",
+  "mat-sikagrout-212", "mat-sika-chapdur", "mat-sika-futs", "mat-waterstop", "mat-grillage", "mat-chaussures-s3", "mat-polyethylene",
+  "mat-contreplaque-filme", "mat-contreplaque", "mat-tole-ondulee", "mat-tuile-pierre", "mat-gilet", "mat-poutrelles", "mat-geotextile",
+  "gal-mat-sikagrout-sacs", "gal-mat-filme-greatest-noir", "gal-mat-filme-greatest", "gal-mat-filme-global", "gal-mat-toles-brunes", "gal-mat-toles-rouges",
+  "gal-mat-polyethylene-rouleaux", "gal-mat-poutrelles-mesure", "gal-mat-geotextile-entrepot", "gal-mat-tuile-brune", "gal-chantier-etancheite",
 ].map((key) => ({ key, file: `/seed/${key}.webp` }));
 
 /** Services (collection `activities`). */
@@ -33,6 +37,38 @@ export const SEED_SERVICES: SeedDoc[] = [
     description: "Achat et vente de toutes machines pour la menuiserie et la vitrerie." } },
 ];
 
+/** Matériels (collection `achievements`) : descriptions limitées à ce qui est visible sur les photos et les étiquettes. */
+export const SEED_MATERIELS: SeedDoc[] = [
+  { id: "materiel-sikagrout-212", data: { order: "1", title: "Mortier de scellement SikaGrout 212", category: "Béton et mortiers", image: IMG("mat-sikagrout-212"),
+    description: "Mortier de scellement cimentaire à retrait compensé, à usage général.", result: "Sac de 25 kg · coloris gris" } },
+  { id: "materiel-sika-chapdur-premix", data: { order: "2", title: "Durcisseur de sol Sika Chapdur Premix", category: "Béton et mortiers", image: IMG("mat-sika-chapdur"),
+    description: "Durcisseur de sol non métallique, pour sols industriels.", result: "Sac de 25 kg · coloris gris" } },
+  { id: "materiel-sika-futs", data: { order: "3", title: "Produits Sika en fûts", category: "Étanchéité", image: IMG("mat-sika-futs"),
+    description: "Produits Sika conditionnés en fûts, pour vos chantiers de construction." } },
+  { id: "materiel-waterstop-pvc", data: { order: "4", title: "Bandes d’étanchéité PVC en rouleaux (waterstop)", category: "Étanchéité", image: IMG("mat-waterstop"),
+    description: "Rouleaux de bandes d’étanchéité pour joints de béton, livrés en grandes quantités." } },
+  { id: "materiel-poutrelles-acier", data: { order: "5", title: "Poutrelles et profilés en acier", category: "Acier", image: IMG("mat-poutrelles"),
+    description: "Poutrelles et profilés en acier pour la construction métallique et le BTP." } },
+  { id: "materiel-contreplaque-filme", data: { order: "6", title: "Contreplaqué filmé pour coffrage", category: "Bois", image: IMG("mat-contreplaque-filme"),
+    description: "Panneaux de contreplaqué filmé, pour le coffrage du béton, disponibles en plusieurs marques." } },
+  { id: "materiel-contreplaque", data: { order: "7", title: "Contreplaqué", category: "Bois", image: IMG("mat-contreplaque"),
+    description: "Panneaux de contreplaqué pour la menuiserie et l’agencement." } },
+  { id: "materiel-toles-couverture", data: { order: "8", title: "Tôles de couverture colorées", category: "Couverture", image: IMG("mat-tole-ondulee"),
+    description: "Tôles ondulées et tôles bac en plusieurs coloris : bleu, rouge, brun et vert." } },
+  { id: "materiel-tuiles-granulés-pierre", data: { order: "9", title: "Tuiles de couverture à granulés de pierre", category: "Couverture", image: IMG("mat-tuile-pierre"),
+    description: "Tuiles de couverture en acier à revêtement de granulés de pierre, en plusieurs teintes." } },
+  { id: "materiel-polyethylene", data: { order: "10", title: "Film polyéthylène noir en rouleaux", category: "Étanchéité", image: IMG("mat-polyethylene"),
+    description: "Film polyéthylène noir en rouleaux, pour la protection et l’étanchéité sur chantier." } },
+  { id: "materiel-geotextile", data: { order: "11", title: "Géotextile en rouleaux", category: "Étanchéité", image: IMG("mat-geotextile"),
+    description: "Géotextile en rouleaux pour travaux de terrassement, de drainage et de voirie." } },
+  { id: "materiel-grillage-plastifie", data: { order: "12", title: "Grillage plastifié", category: "Clôture", image: IMG("mat-grillage"),
+    description: "Grillage en maille plastifiée verte, pour la clôture et la protection de sites." } },
+  { id: "materiel-chaussures-securite-s3", data: { order: "13", title: "Chaussures de sécurité Prosafe S3 SRC", category: "Sécurité", image: IMG("mat-chaussures-s3"),
+    description: "Chaussures de sécurité montantes, en cuir, pour les chantiers.", result: "Classe S3 SRC" } },
+  { id: "materiel-gilet-haute-visibilite", data: { order: "14", title: "Gilet de sécurité haute visibilité", category: "Sécurité", image: IMG("mat-gilet"),
+    description: "Gilet jaune fluorescent à bandes réfléchissantes, pour la sécurité sur chantier." } },
+];
+
 export const SEED_ORGANIZATIONS: SeedDoc[] = [
   { id: "gbedel", data: { name: "GBEDEL", kind: "Entreprise", role: "Commerce général, import-export et BTP", logo: IMG("logo-gbedel"),
     description: "Tout le nécessaire pour vos chantiers de construction, publics ou privés.\nNos engagements : qualité, prix compétitifs, disponibilité, rapidité, conseil, fiabilité." } },
@@ -51,6 +87,17 @@ export const SEED_GALLERY: SeedDoc[] = [
   { id: "gal-rencontre-partenaire", data: { image: IMG("gal-rencontre-partenaire"), alt: "Delphin GBESSE devant un magasin lors d’une rencontre avec un partenaire", title: "Rencontre avec un partenaire", category: "Entreprise" } },
   { id: "gal-reunion-affaires", data: { image: IMG("gal-reunion-affaires"), alt: "Delphin GBESSE en réunion d’affaires dans un magasin de peinture", title: "Réunion d’affaires", category: "Entreprise" } },
   { id: "gal-portrait-costume", data: { image: IMG("gal-portrait-costume"), alt: "Portrait de Delphin GBESSE en costume bleu marine, souriant", title: "Portrait", category: "Portraits" } },
+  { id: "gal-mat-sikagrout-sacs", data: { image: IMG("gal-mat-sikagrout-sacs"), alt: "Sacs de mortier SikaGrout 212 de 25 kg", title: "SikaGrout 212", category: "Matériels" } },
+  { id: "gal-mat-filme-greatest-noir", data: { image: IMG("gal-mat-filme-greatest-noir"), alt: "Contreplaqué filmé noir, marque Greatest Quality", title: "Contreplaqué filmé", category: "Matériels" } },
+  { id: "gal-mat-filme-greatest", data: { image: IMG("gal-mat-filme-greatest"), alt: "Panneau de contreplaqué filmé, marque Greatest Quality", title: "Contreplaqué filmé", category: "Matériels" } },
+  { id: "gal-mat-filme-global", data: { image: IMG("gal-mat-filme-global"), alt: "Panneaux de contreplaqué filmé, marque Global", title: "Contreplaqué filmé", category: "Matériels" } },
+  { id: "gal-mat-toles-brunes", data: { image: IMG("gal-mat-toles-brunes"), alt: "Piles de tôles ondulées brunes et vertes", title: "Tôles de couverture", category: "Matériels" } },
+  { id: "gal-mat-toles-rouges", data: { image: IMG("gal-mat-toles-rouges"), alt: "Tôles de couverture rouges empilées", title: "Tôles de couverture", category: "Matériels" } },
+  { id: "gal-mat-polyethylene-rouleaux", data: { image: IMG("gal-mat-polyethylene-rouleaux"), alt: "Rouleaux de film polyéthylène noir", title: "Film polyéthylène", category: "Matériels" } },
+  { id: "gal-mat-poutrelles-mesure", data: { image: IMG("gal-mat-poutrelles-mesure"), alt: "Poutrelles en acier mesurées au mètre ruban", title: "Poutrelles en acier", category: "Matériels" } },
+  { id: "gal-mat-geotextile-entrepot", data: { image: IMG("gal-mat-geotextile-entrepot"), alt: "Rouleaux de géotextile empilés dans un entrepôt", title: "Géotextile", category: "Matériels" } },
+  { id: "gal-mat-tuile-brune", data: { image: IMG("gal-mat-tuile-brune"), alt: "Tuiles de couverture à granulés de pierre, teintes brunes", title: "Tuiles à granulés de pierre", category: "Matériels" } },
+  { id: "gal-chantier-etancheite", data: { image: IMG("gal-chantier-etancheite"), alt: "Mur de soubassement avec revêtement d’étanchéité noir sur un chantier", title: "Étanchéité d’un soubassement", category: "Chantier" } },
   { id: "gal-ceremonie", data: { image: IMG("gal-ceremonie"), alt: "Délégation d’élus en écharpe aux couleurs nationales saluant des invités lors d’une cérémonie", title: "Cérémonie officielle", category: "Événements" } },
 ];
 

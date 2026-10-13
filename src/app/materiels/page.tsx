@@ -1,7 +1,7 @@
 import PageShell from "@/components/PageShell";
 import { AchievementFeatures } from "@/components/FeatureList";
 import { Empty } from "@/components/Cards";
-import { byDateDesc, getPublic, getTexts } from "@/lib/data";
+import { byOrder, getPublic, getTexts } from "@/lib/data";
 import { pageMeta } from "@/lib/pagemeta";
 import type { Achievement } from "@/types";
 
@@ -10,5 +10,5 @@ export const generateMetadata = () => pageMeta("materiels", "/materiels");
 
 export default async function Page() {
   const [t, items] = await Promise.all([getTexts(), getPublic<Achievement>("achievements")]);
-  return <PageShell title={t.p_materiels_title} intro={t.p_materiels_intro} banner={t.p_materiels_banner}>{items.length ? <AchievementFeatures items={[...items].sort(byDateDesc)} /> : <Empty />}</PageShell>;
+  return <PageShell title={t.p_materiels_title} intro={t.p_materiels_intro} banner={t.p_materiels_banner}>{items.length ? <AchievementFeatures items={[...items].sort(byOrder)} /> : <Empty />}</PageShell>;
 }

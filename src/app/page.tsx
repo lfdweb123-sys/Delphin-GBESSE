@@ -75,7 +75,7 @@ export default async function Home() {
 
       {on("about") && aboutItems(profile, t, name).length > 0 && sec("about", "a-propos", "soft", <FeatureList items={aboutItems(profile, t, name)} />)}
       {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><TimelineList items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
-      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><AchievementFeatures items={[...achievements].sort(byDateDesc).slice(0, 3)} />{more("achievements", "/materiels")}</>)}
+      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><AchievementFeatures items={[...achievements].sort(byOrder).slice(0, 3)} />{more("achievements", "/materiels")}</>)}
       {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><ServiceList items={[...activities].sort(byOrder).slice(0, 4)} />{more("activities", "/services")}</>)}
       {on("organizations") && orgs.length > 0 && sec("organizations", undefined, "soft", <div className="grid gap-5 md:grid-cols-2">{orgs.map((o) => <OrganizationCard key={o.id} o={o} />)}</div>)}
       {on("news") && news.length > 0 && sec("news", undefined, "white", <><div className={grid}>{[...news].sort(byDateDesc).slice(0, 3).map((n) => <NewsCard key={n.id} n={n} />)}</div>{more("news", "/actualites")}</>)}
