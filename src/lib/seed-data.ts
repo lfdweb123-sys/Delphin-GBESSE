@@ -55,7 +55,7 @@ export const SEED_GALLERY: SeedDoc[] = [
 ];
 
 const A = "Delphin GBESSE";
-const SIGN = "La vraie information avec Mahugnon Firmin 96 80 43 02.";
+const SIGN = "La vraie information avec Mahugnon Firmin.";
 
 export const SEED_NEWS: SeedDoc[] = [
   { id: "message-fete-independance", data: { slug: "message-fete-independance", title: "Message du Conseiller Delphin GBESSE Cherif Deen pour la fête de l’indépendance",
@@ -98,7 +98,7 @@ Très cordialement,
 Delphin GBESSE
 Conseiller.
 
-C.com Delphin GBESSE 96 80 43 02.` } },
+C.com Delphin GBESSE.` } },
 
   { id: "cherif-deen-gbesse-dynamisme-vision", data: { slug: "cherif-deen-gbesse-dynamisme-vision", title: "Cherif Deen GBESSE : le dynamisme et la vision au cœur de Sô-Ava",
     date: "2026-06-15", category: "Portrait", author: A, image: IMG("news-conseiller"),
@@ -114,7 +114,7 @@ Le choix de l'avenir : leader inspirant pour la jeunesse et acteur clé de la d�
 
 L'impact par l'action : avec Cherif Deen GBESSE, Sô-Ava avance vers une gouvernance moderne, inclusive et résolument tournée vers la prospérité.
 
-C.com Cherif Deen GBESSE 96 80 43 02.` } },
+C.com Cherif Deen GBESSE.` } },
 
   { id: "message-du-candidat-communales-2026", data: { slug: "message-du-candidat-communales-2026", title: "Message du candidat Delphin GBESSE — élections communales de janvier 2026",
     date: "2026-01-05", category: "Élections", author: A, image: IMG("news-candidat"),
@@ -234,7 +234,7 @@ Que vive le monde du travail !
 Avec tout mon respect et ma considération,
 PDG, Delphin GBESSE
 
-La vraie information sans besogne avec Mahugnon Firmin 96 80 43 02.` } },
+La vraie information sans besogne avec Mahugnon Firmin.` } },
 
   { id: "message-mi-semaine", data: { slug: "message-mi-semaine", title: "Message du leader Delphin GBESSE — mi-semaine",
     date: "2025-04-16", category: "Messages", author: A, image: IMG("news-mi-semaine"),
@@ -252,7 +252,7 @@ Courage à tous, et que cette deuxième moitié de la semaine soit encore plus p
 
 Leader PDG Delphin GBESSE
 
-La vraie information sans besogne avec Mahugnon Firmin 96 80 43 02.` } },
+La vraie information sans besogne avec Mahugnon Firmin.` } },
 
   { id: "leader-pdg-engagement-vulnerables", data: { slug: "leader-pdg-engagement-vulnerables", title: "Leader PDG Delphin GBESSE : un engagement au service des plus vulnérables",
     date: "2025-03-10", category: "Portrait", author: A, image: IMG("news-hommage-leader"),
@@ -292,7 +292,7 @@ En vous rendant hommage aujourd'hui, nous célébrons bien plus qu'un homme ou u
 
 Puissiez-vous continuer à être cette lumière qui éclaire le chemin des oubliés, ce pilier sur lequel les plus fragiles peuvent s'appuyer, et cette voix qui parle en faveur de ceux qui n'en ont pas.
 
-La vraie information sans besogne avec Mahugnon Firmin 96 80 43 02` } },
+La vraie information sans besogne avec Mahugnon Firmin` } },
 
   { id: "hommage-leader-engage-au-service-du-peuple", data: { slug: "hommage-leader-engage-au-service-du-peuple", title: "Hommage à un leader engagé au service du peuple",
     date: "2025-03-05", category: "Portrait", author: A, image: IMG("news-hommage-engage"),
@@ -323,7 +323,7 @@ Que la vie vous rende au centuple ce que vous donnez avec tant de cœur à la co
 Avec toutes nos reconnaissances.
 La communauté lacustre.
 
-La vraie information sans besogne avec Mahugnon Firmin 96804302` } },
+La vraie information sans besogne avec Mahugnon Firmin` } },
 ];
 
 /**

@@ -67,19 +67,19 @@ export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile
               {phone && (
                 <li>
                   <span className={labelCls}>{t.contact_phone_label}</span>
-                  <a href={`tel:${phone.replace(/\s/g, "")}`} className={`mt-1 inline-block ${gold}`}>{phone}</a>
+                  <a href={`tel:${phone.replace(/\s/g, "")}`} className={`mt-1 inline-block ${gold}`}>{t.contact_call} →</a>
                 </li>
               )}
               {wa && (
                 <li>
                   <span className={labelCls}>{t.contact_whatsapp}</span>
-                  <a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`mt-1 inline-block ${gold}`}>{wa}</a>
+                  <a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`mt-1 inline-block ${gold}`}>{t.contact_whatsapp} →</a>
                 </li>
               )}
               {mail && (
                 <li>
                   <span className={labelCls}>{t.contact_email_label}</span>
-                  <a href={`mailto:${mail}`} className={`mt-1 inline-block break-all ${gold}`}>{mail}</a>
+                  <a href={`mailto:${mail}`} className={`mt-1 inline-block ${gold}`}>{t.contact_mail} →</a>
                 </li>
               )}
               {location && (
