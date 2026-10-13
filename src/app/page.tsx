@@ -8,6 +8,7 @@ import ContactSection from "@/components/ContactSection";
 import FloatingActions from "@/components/FloatingActions";
 import FeatureList, { AchievementFeatures, ServiceList, TimelineList } from "@/components/FeatureList";
 import { aboutItems } from "@/lib/about";
+import { isOwnFilterOnly } from "@/lib/gallery";
 import { NewsCard, OrganizationCard } from "@/components/Cards";
 import { byDateAsc, byDateDesc, byOrder, getProfile, getPublic, getTexts } from "@/lib/data";
 import type { Achievement, Activity, EventItem, GalleryItem, NewsItem, Organization, SocialLink, TimelineEntry } from "@/types";
@@ -79,7 +80,7 @@ export default async function Home() {
       {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><ServiceList items={[...activities].sort(byOrder).slice(0, 4)} />{more("activities", "/services")}</>)}
       {on("organizations") && orgs.length > 0 && sec("organizations", undefined, "soft", <div className="grid gap-5 md:grid-cols-2">{orgs.map((o) => <OrganizationCard key={o.id} o={o} />)}</div>)}
       {on("news") && news.length > 0 && sec("news", undefined, "white", <><div className={grid}>{[...news].sort(byDateDesc).slice(0, 3).map((n) => <NewsCard key={n.id} n={n} />)}</div>{more("news", "/actualites")}</>)}
-      {on("gallery") && gallery.length > 0 && sec("gallery", undefined, "soft", <><Gallery items={gallery.slice(0, 8)} />{more("gallery", "/galerie")}</>)}
+      {on("gallery") && gallery.length > 0 && sec("gallery", undefined, "soft", <><Gallery items={gallery.filter((g) => !isOwnFilterOnly(g.category)).slice(0, 8)} />{more("gallery", "/galerie")}</>)}
       {on("socials") && socials.length > 0 && sec("socials", undefined, "white", <SocialLinks links={socials} />)}
       {on("collaboration") && sec("collaboration", undefined, "soft", <Link href="/collaboration" className="btn btn-primary">{t.collab_cta_label}</Link>)}
       {on("contact") && sec("contact", undefined, "white", <ContactSection profile={profile} links={socials} />)}

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { isOwnFilterOnly } from "@/lib/gallery";
 import type { GalleryItem } from "@/types";
 import { useT } from "./TextsProvider";
 
@@ -10,7 +11,7 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
   const [cat, setCat] = useState(t.label_all);
   const [idx, setIdx] = useState<number | null>(null);
   const cats = [t.label_all, ...Array.from(new Set(items.map((i) => i.category).filter(Boolean) as string[]))];
-  const shown = cat === t.label_all ? items : items.filter((i) => i.category === cat);
+  const shown = cat === t.label_all ? items.filter((i) => !isOwnFilterOnly(i.category)) : items.filter((i) => i.category === cat);
   const close = useCallback(() => setIdx(null), []);
   const step = useCallback((d: number) => setIdx((i) => (i === null ? i : (i + d + shown.length) % shown.length)), [shown.length]);
 
