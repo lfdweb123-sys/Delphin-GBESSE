@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Section from "@/components/Section";
-import Timeline from "@/components/Timeline";
 import Gallery from "@/components/Gallery";
 import SocialLinks from "@/components/SocialLinks";
 import ContactSection from "@/components/ContactSection";
-import ServiceList from "@/components/Services";
-import { EventCard, NewsCard, OrganizationCard, ProjectCard } from "@/components/Cards";
+import FeatureList, { AchievementFeatures, ServiceList, TimelineList } from "@/components/FeatureList";
+import { aboutItems } from "@/lib/about";
+import { NewsCard, OrganizationCard } from "@/components/Cards";
 import { byDateAsc, byDateDesc, byOrder, getProfile, getPublic, getTexts } from "@/lib/data";
 import type { Achievement, Activity, EventItem, GalleryItem, NewsItem, Organization, SocialLink, TimelineEntry } from "@/types";
 
@@ -15,14 +15,12 @@ export const revalidate = 60;
 const grid = "grid gap-5 sm:grid-cols-2 lg:grid-cols-3";
 
 export default async function Home() {
-  const [t, profile, timeline, achievements, activities, events, orgs, news, gallery, socials] = await Promise.all([
+  const [t, profile, timeline, achievements, activities, orgs, news, gallery, socials] = await Promise.all([
     getTexts(), getProfile(), getPublic<TimelineEntry>("timeline"), getPublic<Achievement>("achievements"), getPublic<Activity>("activities"),
-    getPublic<EventItem>("events"), getPublic<Organization>("organizations"),
+    getPublic<Organization>("organizations"),
     getPublic<NewsItem>("news"), getPublic<GalleryItem>("gallery"), getPublic<SocialLink>("socialLinks"),
   ]);
   const name = profile?.name || "Delphin GBESSE";
-  const today = new Date().toISOString().slice(0, 10);
-  const upcoming = events.filter((e) => (e.endDate || e.date) >= today).sort(byDateAsc).slice(0, 3);
   const on = (k: string) => t[`s_${k}_show`] !== "Non";
   const ttl = (k: string) => t[`s_${k}_title`];
   const intro = (k: string) => t[`s_${k}_intro`] || undefined;
@@ -74,27 +72,10 @@ export default async function Home() {
         </section>
       )}
 
-      {on("about") && (profile?.presentation || profile?.fullBio || aboutImage || responsibilities) && sec("about", "a-propos", "soft",
-        <div className={`grid items-start gap-8 md:gap-12 ${aboutImage ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
-          {aboutImage && (
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line md:mx-0 md:max-w-none">
-              <Image src={aboutImage} alt={`À propos — ${name}`} fill sizes="(min-width:768px) 40vw, 90vw" className="object-cover object-top" />
-            </div>
-          )}
-          <div>
-            {(profile?.presentation || profile?.fullBio) && (
-              <div className="prose-plain max-w-3xl whitespace-pre-line text-muted">{profile.presentation || profile.fullBio}</div>
-            )}
-            {profile?.domains && <p className="mt-6 text-sm"><strong>{t.label_domains} :</strong> {profile.domains}</p>}
-            {profile?.location && <p className="mt-2 text-sm"><strong>{t.label_location} :</strong> {profile.location}</p>}
-            {responsibilities && <p className="mt-2 whitespace-pre-line text-sm"><strong>{t.label_responsibilities} :</strong> {responsibilities}</p>}
-          </div>
-        </div>
-      )}
-      {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><Timeline items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
-      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><div className={grid}>{[...achievements].sort(byDateDesc).slice(0, 3).map((a) => <ProjectCard key={a.id} p={a} />)}</div>{more("achievements", "/realisations")}</>)}
+      {on("about") && aboutItems(profile, t, name).length > 0 && sec("about", "a-propos", "soft", <FeatureList items={aboutItems(profile, t, name)} />)}
+      {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><TimelineList items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
+      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><AchievementFeatures items={[...achievements].sort(byDateDesc).slice(0, 3)} />{more("achievements", "/realisations")}</>)}
       {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><ServiceList items={[...activities].sort(byOrder).slice(0, 4)} />{more("activities", "/services")}</>)}
-      {on("events") && upcoming.length > 0 && sec("events", undefined, "soft", <><div className={grid}>{upcoming.map((e) => <EventCard key={e.id} e={e} />)}</div>{more("events", "/evenements")}</>)}
       {on("organizations") && orgs.length > 0 && sec("organizations", undefined, "soft", <div className="grid gap-5 md:grid-cols-2">{orgs.map((o) => <OrganizationCard key={o.id} o={o} />)}</div>)}
       {on("news") && news.length > 0 && sec("news", undefined, "white", <><div className={grid}>{[...news].sort(byDateDesc).slice(0, 3).map((n) => <NewsCard key={n.id} n={n} />)}</div>{more("news", "/actualites")}</>)}
       {on("gallery") && gallery.length > 0 && sec("gallery", undefined, "soft", <><Gallery items={gallery.slice(0, 8)} />{more("gallery", "/galerie")}</>)}

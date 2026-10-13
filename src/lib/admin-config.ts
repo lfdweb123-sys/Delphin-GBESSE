@@ -27,9 +27,6 @@ export const SECTIONS: Section[] = [
   { slug: "textes-pages", label: "Pages (titres, bannières, libellés)", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(PAGE_FIELDS) },
   { slug: "textes-menu", label: "Menu, pied de page, page 404", collection: "settings", docId: "texts", titleKey: "hero_title", single: true, fields: fromText(CHROME_FIELDS) },
   { slug: "parcours", label: "Parcours", collection: "timeline", titleKey: "title", fields: [{ ...title }, { ...date, required: true }, desc, category, image, url] },
-  { slug: "evenements", label: "Événements", collection: "events", titleKey: "title", fields: [
-    title, desc, { ...date, required: true }, { key: "endDate", label: "Date de fin", type: "date" }, { key: "time", label: "Heure", type: "text" },
-    { key: "location", label: "Lieu", type: "text" }, image, { key: "participants", label: "Participants", type: "textarea" }, url] },
   { slug: "services", label: "Services", collection: "activities", titleKey: "title", fields: [title, desc, { key: "order", label: "Ordre d’affichage (1, 2, 3…)", type: "text" }, image,
     { key: "url", label: "Lien du bouton (vide = page contact)", type: "url" }] },
   { slug: "realisations", label: "Réalisations", collection: "achievements", titleKey: "title", fields: [title, desc, date, category, image, { key: "result", label: "Résultat", type: "text" }, url] },

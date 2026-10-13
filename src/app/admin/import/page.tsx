@@ -6,6 +6,7 @@ import { GENERIC_DOCS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEE
 
 const imageId = (key: string) => `seed${key.replace(/[^A-Za-z0-9]/g, "")}`;
 const norm = (v: unknown) => String(v ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+const slugify = (v: string) => norm(v).replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 const toBase64 = (b: Blob): Promise<string> =>
   new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = () => rej(new Error("Lecture impossible")); r.readAsDataURL(b); });
 
@@ -50,6 +51,22 @@ export default function ImportPage() {
         }
         add(`${g.label} : ${g.docs.length} enregistré(s)`);
       }
+      // Événements → Actualités (la rubrique « Événements » n'existe plus dans le menu).
+      const evSnap = await getDocs(collection(db, "events"));
+      let moved = 0;
+      for (const e of evSnap.docs) {
+        const v = e.data();
+        const title = String(v.title ?? "").trim();
+        if (!title || v.status !== "published") continue;
+        const slug = `evenement-${slugify(title)}`.slice(0, 80);
+        const parts = [v.description, v.location && `Lieu : ${v.location}`, v.time && `Heure : ${v.time}`, v.participants && `Participants : ${v.participants}`].filter(Boolean);
+        await setDoc(doc(db, "news", slug), {
+          slug, title, content: parts.join("\n\n"), date: v.date, category: "Événement", image: v.image || "",
+          ...(v.url ? { sourceUrl: v.url } : {}), status: "published", verificationStatus: "verified", createdAt: now, updatedAt: now,
+        });
+        moved++;
+      }
+      add(`Événements ajoutés aux actualités : ${moved}`);
       // Profil et textes d'accueil : uniquement la personne (l'entreprise est dans « Services » et « Organisations »).
       const flags = { status: "published", verificationStatus: "verified", updatedAt: now };
       await setDoc(doc(db, "profile", "main"), { ...PROFILE_UPDATE, ...flags }, { merge: true });
@@ -78,7 +95,7 @@ export default function ImportPage() {
     <div className="max-w-2xl">
       <h1 className="mb-2 font-serif text-3xl font-semibold">Import initial des contenus</h1>
       <p className="mb-4 text-sm text-muted">
-        Ce script s’exécute dans votre navigateur (aucune commande). Il enregistre dans Firestore : {SEED_SERVICES.length} services, {SEED_NEWS.length} articles avec leur photo,
+        Ce script s’exécute dans votre navigateur (aucune commande). Il ajoute aussi les événements existants aux actualités. Il enregistre dans Firestore : {SEED_SERVICES.length} services, {SEED_NEWS.length} articles avec leur photo,
         {" "}{SEED_GALLERY.length} photos de galerie, l’entreprise GBEDEL et une entrée de parcours. Le profil et le texte d’accueil sont réécrits pour ne parler que de la personne (l’entreprise reste dans « Services » et « Organisations »). Tout est publié et vérifié, donc visible sur le site (≤ 1 minute).
       </p>
       <p className="mb-6 text-sm text-muted">Relancer l’import met à jour les mêmes éléments (pas de doublons) mais écrase les modifications faites sur eux depuis le dashboard.</p>

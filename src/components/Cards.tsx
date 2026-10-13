@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/format";
-import type { Achievement, EventItem, NewsItem, Organization, Project } from "@/types";
+import type { Achievement,  NewsItem, Organization, Project } from "@/types";
 import ExpandableText from "./ExpandableText";
 import { useT } from "./TextsProvider";
 
@@ -15,21 +15,6 @@ function Ext({ url, label }: { url?: string; label: string }) {
 }
 
 /* `self-start` : une carte qui s'agrandit avec « Lire plus » n'étire pas les cartes voisines. */
-export function EventCard({ e }: { e: EventItem }) {
-  const t = useT();
-  return (
-    <article className="card flex flex-col self-start">
-      <Cover src={e.image} alt={e.title} />
-      <div className="flex flex-1 flex-col p-5">
-        <p className="text-sm text-muted">{formatDate(e.date)}{e.time ? ` — ${e.time}` : ""}</p>
-        <h3 className="mt-1 text-lg font-semibold">{e.title}</h3>
-        {e.location && <p className="mt-1 text-sm text-muted">{e.location}</p>}
-        {e.description && <div className="mt-3"><ExpandableText text={e.description} className="text-sm leading-6 text-muted" /></div>}
-        <Ext url={e.url} label={t.label_more} />
-      </div>
-    </article>
-  );
-}
 export function ProjectCard({ p }: { p: Project | Achievement }) {
   const t = useT();
   const result = typeof p.result === "string" ? p.result : "";

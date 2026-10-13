@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   async redirects() {
-    return [{ source: "/activites", destination: "/services", permanent: true }];
+    return [
+      { source: "/activites", destination: "/services", permanent: true },
+      { source: "/evenements", destination: "/actualites", permanent: true },
+    ];
   },
   async headers() {
     return [{

@@ -8,7 +8,7 @@ const YN = ["Oui", "Non"];
 const SECTIONS = [
   { k: "about", title: "À propos" },
   { k: "timeline", title: "Parcours", more: "Voir tout le parcours" }, { k: "achievements", title: "Réalisations", more: "Toutes les réalisations" },
-  { k: "activities", title: "Services", more: "Tous les services" }, { k: "events", title: "Événements", more: "Tous les événements" },
+  { k: "activities", title: "Services", more: "Tous les services" },
   { k: "organizations", title: "Organisations" },
   { k: "news", title: "Actualités", more: "Toutes les actualités" }, { k: "gallery", title: "Galerie", more: "Voir la galerie" },
   { k: "socials", title: "Réseaux sociaux" },
@@ -16,8 +16,8 @@ const SECTIONS = [
   { k: "contact", title: "Contact" },
 ];
 const PAGES = [
-  { k: "parcours", title: "Parcours" }, { k: "realisations", title: "Réalisations" }, { k: "services", title: "Services" },
-  { k: "evenements", title: "Événements" }, { k: "actualites", title: "Actualités" }, { k: "galerie", title: "Galerie" },
+  { k: "apropos", title: "À propos" }, { k: "parcours", title: "Parcours" }, { k: "realisations", title: "Réalisations" }, { k: "services", title: "Services" },
+  { k: "actualites", title: "Actualités" }, { k: "galerie", title: "Galerie" },
   { k: "collaboration", title: "Collaboration", intro: "Cette page s’adresse à toute structure souhaitant échanger sur une collaboration ou une opportunité de partenariat." },
   { k: "contact", title: "Contact" },
 ];
@@ -63,10 +63,6 @@ export const PAGE_FIELDS: TextField[] = [
   { key: "contact_phone_label", label: "Libellé téléphone", type: "text", def: "Téléphone" },
   { key: "contact_email_label", label: "Libellé e-mail", type: "text", def: "E-mail" },
   { key: "contact_empty", label: "Message si aucune coordonnée", type: "text", def: "Les coordonnées publiques seront bientôt disponibles." },
-  { key: "h_events", label: "Événements — groupes", type: "heading" },
-  { key: "ev_upcoming", label: "À venir", type: "text", def: "À venir" },
-  { key: "ev_current", label: "En cours", type: "text", def: "En cours" },
-  { key: "ev_past", label: "Passés", type: "text", def: "Passés" },
   { key: "h_labels", label: "Libellés généraux", type: "heading" },
   { key: "empty_text", label: "Message « aucun contenu »", type: "text", def: "Aucun contenu publié pour le moment." },
   { key: "empty_search", label: "Message « aucun résultat »", type: "text", def: "Aucun article ne correspond à votre recherche." },
