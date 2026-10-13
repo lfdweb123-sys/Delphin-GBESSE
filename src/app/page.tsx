@@ -6,7 +6,8 @@ import Timeline from "@/components/Timeline";
 import Gallery from "@/components/Gallery";
 import SocialLinks from "@/components/SocialLinks";
 import ContactSection from "@/components/ContactSection";
-import { EventCard, NewsCard, OrganizationCard, ProjectCard, ServiceCard } from "@/components/Cards";
+import ServiceList from "@/components/Services";
+import { EventCard, NewsCard, OrganizationCard, ProjectCard } from "@/components/Cards";
 import { byDateAsc, byDateDesc, byOrder, getProfile, getPublic, getTexts } from "@/lib/data";
 import type { Achievement, Activity, EventItem, GalleryItem, NewsItem, Organization, SocialLink, TimelineEntry } from "@/types";
 
@@ -92,7 +93,7 @@ export default async function Home() {
       )}
       {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><Timeline items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
       {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><div className={grid}>{[...achievements].sort(byDateDesc).slice(0, 3).map((a) => <ProjectCard key={a.id} p={a} />)}</div>{more("achievements", "/realisations")}</>)}
-      {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><div className="grid gap-6">{[...activities].sort(byOrder).slice(0, 4).map((a) => <ServiceCard key={a.id} s={a} />)}</div>{more("activities", "/services")}</>)}
+      {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><ServiceList items={[...activities].sort(byOrder).slice(0, 4)} />{more("activities", "/services")}</>)}
       {on("events") && upcoming.length > 0 && sec("events", undefined, "soft", <><div className={grid}>{upcoming.map((e) => <EventCard key={e.id} e={e} />)}</div>{more("events", "/evenements")}</>)}
       {on("organizations") && orgs.length > 0 && sec("organizations", undefined, "soft", <div className="grid gap-5 md:grid-cols-2">{orgs.map((o) => <OrganizationCard key={o.id} o={o} />)}</div>)}
       {on("news") && news.length > 0 && sec("news", undefined, "white", <><div className={grid}>{[...news].sort(byDateDesc).slice(0, 3).map((n) => <NewsCard key={n.id} n={n} />)}</div>{more("news", "/actualites")}</>)}
