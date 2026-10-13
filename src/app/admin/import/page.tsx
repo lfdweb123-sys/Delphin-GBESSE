@@ -2,15 +2,16 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "@/lib/firebase";
-import { GENERIC_DOCS, OLD_IMAGE_IDS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
+import { GENERIC_DOCS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
 
 const imageId = (key: string) => `seed${key.replace(/[^A-Za-z0-9]/g, "")}`;
 const norm = (v: unknown) => String(v ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const toBase64 = (b: Blob): Promise<string> =>
   new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = () => rej(new Error("Lecture impossible")); r.readAsDataURL(b); });
 
-const GROUPS: { label: string; col: string; docs: SeedDoc[] }[] = [
-  { label: "Services", col: "activities", docs: SEED_SERVICES },
+const GROUPS: { label: string; col: string; docs: SeedDoc[]; merge?: boolean }[] = [
+  // Services : fusion, pour conserver les images déjà mises en place depuis le dashboard.
+  { label: "Services", col: "activities", docs: SEED_SERVICES, merge: true },
   { label: "Entreprise", col: "organizations", docs: SEED_ORGANIZATIONS },
   { label: "Parcours", col: "timeline", docs: SEED_TIMELINE },
   { label: "Articles", col: "news", docs: SEED_NEWS },
@@ -45,7 +46,7 @@ export default function ImportPage() {
       }
       for (const g of GROUPS) {
         for (const d of g.docs) {
-          await setDoc(doc(db, g.col, d.id), { ...resolve(d.data), status: "published", verificationStatus: "verified", createdAt: now, updatedAt: now });
+          await setDoc(doc(db, g.col, d.id), { ...resolve(d.data), status: "published", verificationStatus: "verified", createdAt: now, updatedAt: now }, { merge: !!g.merge });
         }
         add(`${g.label} : ${g.docs.length} enregistré(s)`);
       }
@@ -54,13 +55,7 @@ export default function ImportPage() {
       await setDoc(doc(db, "profile", "main"), { ...PROFILE_UPDATE, ...flags }, { merge: true });
       await setDoc(doc(db, "settings", "texts"), { ...TEXTS_UPDATE, ...flags }, { merge: true });
       add("Profil et texte d’accueil mis à jour (personne uniquement)");
-      for (const id of OLD_IMAGE_IDS) await deleteDoc(doc(db, "images", id)).catch(() => undefined);
       if (clean) {
-        const keep = new Set(SEED_SERVICES.map((s) => s.id));
-        const snap = await getDocs(collection(db, "activities"));
-        let n = 0;
-        for (const d of snap.docs) if (!keep.has(d.id)) { await deleteDoc(d.ref); n++; }
-        add(`Anciens services supprimés : ${n}`);
         let g = 0;
         for (const x of GENERIC_DOCS) {
           const keepIds = new Set(GROUPS.filter((gr) => gr.col === x.col).flatMap((gr) => gr.docs.map((d) => d.id)));
@@ -71,7 +66,7 @@ export default function ImportPage() {
             if (x.starts.some((st) => v.startsWith(norm(st)))) { await deleteDoc(d.ref); g++; }
           }
         }
-        add(`Contenus génériques supprimés (actualité, parcours, réalisation, organisation) : ${g}`);
+        add(`Contenus génériques supprimés : ${g}`);
       }
       setDone(true);
     } catch (e) {
@@ -89,7 +84,7 @@ export default function ImportPage() {
       <p className="mb-6 text-sm text-muted">Relancer l’import met à jour les mêmes éléments (pas de doublons) mais écrase les modifications faites sur eux depuis le dashboard.</p>
       <label className="mb-5 flex items-start gap-2 text-sm">
         <input type="checkbox" className="mt-1" checked={clean} onChange={(e) => setClean(e.target.checked)} />
-        <span>Nettoyer : supprimer les anciens éléments de « Services » hors liste (ex. « Activités professionnelles ») et les contenus génériques qui mélangent la personne et l’entreprise (actualité « un engagement en faveur du développement », parcours « un parcours d’entrepreneur », réalisation « Réalisations et contributions », organisation « Entreprises et organisations de Delphin Gbesse »).</span>
+        <span>Nettoyer : supprimer les contenus génériques qui mélangent la personne et l’entreprise (service « Activités professionnelles », actualité « un engagement en faveur du développement », parcours « un parcours d’entrepreneur », réalisation « Réalisations et contributions », organisation « Entreprises et organisations de Delphin Gbesse »). Vos autres contenus et vos images de services ne sont pas touchés.</span>
       </label>
       <button type="button" className="btn btn-primary" disabled={busy} onClick={run}>{busy ? "Import en cours…" : done ? "Relancer l’import" : "Lancer l’import"}</button>
       {err && <p role="alert" className="mt-4 text-sm text-red-700">{err}</p>}

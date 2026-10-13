@@ -9,7 +9,6 @@ export interface SeedDoc { id: string; data: Record<string, unknown> }
 const IMG = (key: string) => `@img:${key}`;
 
 export const SEED_IMAGES: SeedImage[] = [
-  "svc-pro-import-export", "svc-pro-materiaux", "svc-pro-quincaillerie", "svc-pro-bois", "svc-pro-batiment", "svc-pro-assainissement", "svc-pro-machines",
   "news-independance", "news-bacheliers", "news-conseiller", "news-candidat", "news-rentree", "news-dgiz", "news-debut-semaine",
   "news-fete-travail", "news-mi-semaine", "news-hommage-leader", "news-hommage-engage", "news-communaute-lacustre",
   "gal-bureau-1", "gal-bureau-2", "gal-bureau-3", "gal-ceremonie", "gal-chantier", "gal-rencontre-partenaire", "gal-reunion-affaires", "gal-portrait-costume",
@@ -18,19 +17,19 @@ export const SEED_IMAGES: SeedImage[] = [
 
 /** Services (collection `activities`). */
 export const SEED_SERVICES: SeedDoc[] = [
-  { id: "service-import-export", data: { order: "1", title: "Import-export", image: IMG("svc-pro-import-export"),
+  { id: "service-import-export", data: { order: "1", title: "Import-export",
     description: "Import-export de matériels, matériaux et marchandises : tout le nécessaire pour vos chantiers de construction, publics ou privés." } },
-  { id: "service-importation-materiaux", data: { order: "2", title: "Importation de matériels et matériaux de construction, boissons", image: IMG("svc-pro-materiaux"),
+  { id: "service-importation-materiaux", data: { order: "2", title: "Importation de matériels et matériaux de construction, boissons",
     description: "Importation de matériels et de matériaux de construction, ainsi que de boissons." } },
-  { id: "service-quincaillerie-ciments", data: { order: "3", title: "Quincaillerie, achat et vente de ciments", image: IMG("svc-pro-quincaillerie"),
+  { id: "service-quincaillerie-ciments", data: { order: "3", title: "Quincaillerie, achat et vente de ciments",
     description: "Quincailleries, achat et vente de ciments." } },
-  { id: "service-produits-forestiers", data: { order: "4", title: "Produits forestiers et tropicaux, menuiserie, scierie, BTP", image: IMG("svc-pro-bois"),
+  { id: "service-produits-forestiers", data: { order: "4", title: "Produits forestiers et tropicaux, menuiserie, scierie, BTP",
     description: "Achat et vente des produits forestiers et tropicaux, menuiserie, scierie, BTP." } },
-  { id: "service-construction-revetement", data: { order: "5", title: "Construction et revêtement de bâtiments", image: IMG("svc-pro-batiment"),
+  { id: "service-construction-revetement", data: { order: "5", title: "Construction et revêtement de bâtiments",
     description: "Construction et revêtement de bâtiments." } },
-  { id: "service-assainissement-curage", data: { order: "6", title: "Assainissement et curage d’équipements", image: IMG("svc-pro-assainissement"),
+  { id: "service-assainissement-curage", data: { order: "6", title: "Assainissement et curage d’équipements",
     description: "Assainissement et curage d’équipements." } },
-  { id: "service-machines-menuiserie-vitrerie", data: { order: "7", title: "Machines pour la menuiserie et la vitrerie", image: IMG("svc-pro-machines"),
+  { id: "service-machines-menuiserie-vitrerie", data: { order: "7", title: "Machines pour la menuiserie et la vitrerie",
     description: "Achat et vente de toutes machines pour la menuiserie et la vitrerie." } },
 ];
 
@@ -327,10 +326,6 @@ La communauté lacustre.
 La vraie information sans besogne avec Mahugnon Firmin 96804302` } },
 ];
 
-/** Anciennes images de services (floues) à supprimer de Firestore lors de l'import. */
-export const OLD_IMAGE_IDS = ["seedsvcimportexport", "seedsvcmateriaux", "seedsvcquincaillerie", "seedsvcbois", "seedsvcrevetement", "seedsvcassainissement", "seedsvcmachines",
-  "seedsvcillimportexport", "seedsvcillmateriaux", "seedsvcillquincaillerie", "seedsvcillbois", "seedsvcillbatiment", "seedsvcillassainissement", "seedsvcillmachines"];
-
 /**
  * Séparation personne / entreprise : le profil, le héros et « À propos » parlent uniquement de Delphin GBESSE ;
  * l'entreprise GBEDEL et ses prestations sont présentées dans « Services » et « Organisations ».
@@ -355,6 +350,7 @@ export const TEXTS_UPDATE: Record<string, string> = {
  * Correspondance sur le début du titre (ou du nom), sans tenir compte de la casse ni des accents.
  */
 export const GENERIC_DOCS: { col: string; field: string; starts: string[] }[] = [
+  { col: "activities", field: "title", starts: ["activites professionnelles"] },
   { col: "news", field: "title", starts: ["delphin gbesse : un engagement en faveur du developpement"] },
   { col: "timeline", field: "title", starts: ["delphin gbesse : un parcours d'entrepreneur", "delphin gbesse : un parcours d’entrepreneur"] },
   { col: "achievements", field: "title", starts: ["realisations et contributions"] },
