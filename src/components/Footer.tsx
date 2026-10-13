@@ -40,7 +40,7 @@ export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile
               width={400}
               height={400}
               sizes="(min-width:640px) 400px, 90vw"
-              className="aspect-square w-full max-w-[400px] rounded-xl object-cover"
+              className="aspect-square w-full max-w-[400px] rounded-xl object-cover object-top"
             />
           )}
           {t.footer_text && <p className="max-w-sm whitespace-pre-line text-sm leading-6 text-white/70">{t.footer_text}</p>}

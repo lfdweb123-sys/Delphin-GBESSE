@@ -26,7 +26,7 @@ export default function Timeline({ items }: { items: TimelineEntry[] }) {
               <div className={`grid items-start ${x.image ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
                 {x.image && (
                   <div className="relative aspect-[4/3] w-full self-start overflow-hidden bg-soft md:aspect-[4/5]">
-                    <Image src={x.image} alt={x.title} fill sizes="(min-width:768px) 30vw, 100vw" className="object-cover" />
+                    <Image src={x.image} alt={x.title} fill sizes="(min-width:768px) 30vw, 100vw" className="object-cover object-top" />
                   </div>
                 )}
                 <div className="min-w-0 p-5 sm:p-7">

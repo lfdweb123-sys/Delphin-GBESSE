@@ -1,8 +1,8 @@
 "use client";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "@/lib/firebase";
-import { SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, type SeedDoc } from "@/lib/seed-data";
+import { OLD_IMAGE_IDS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
 
 const imageId = (key: string) => `seed${key.replace(/[^A-Za-z0-9]/g, "")}`;
 const toBase64 = (b: Blob): Promise<string> =>
@@ -24,6 +24,7 @@ export default function ImportPage() {
   const [log, setLog] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const [clean, setClean] = useState(true);
   const [err, setErr] = useState("");
   const add = (l: string) => setLog((p) => [...p, l]);
 
@@ -47,6 +48,19 @@ export default function ImportPage() {
         }
         add(`${g.label} : ${g.docs.length} enregistré(s)`);
       }
+      // Profil et textes d'accueil : uniquement la personne (l'entreprise est dans « Services » et « Organisations »).
+      const flags = { status: "published", verificationStatus: "verified", updatedAt: now };
+      await setDoc(doc(db, "profile", "main"), { ...PROFILE_UPDATE, ...flags }, { merge: true });
+      await setDoc(doc(db, "settings", "texts"), { ...TEXTS_UPDATE, ...flags }, { merge: true });
+      add("Profil et texte d’accueil mis à jour (personne uniquement)");
+      for (const id of OLD_IMAGE_IDS) await deleteDoc(doc(db, "images", id)).catch(() => undefined);
+      if (clean) {
+        const keep = new Set(SEED_SERVICES.map((s) => s.id));
+        const snap = await getDocs(collection(db, "activities"));
+        let n = 0;
+        for (const d of snap.docs) if (!keep.has(d.id)) { await deleteDoc(d.ref); n++; }
+        add(`Anciens services supprimés : ${n}`);
+      }
       setDone(true);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Import impossible.");
@@ -58,9 +72,13 @@ export default function ImportPage() {
       <h1 className="mb-2 font-serif text-3xl font-semibold">Import initial des contenus</h1>
       <p className="mb-4 text-sm text-muted">
         Ce script s’exécute dans votre navigateur (aucune commande). Il enregistre dans Firestore : {SEED_SERVICES.length} services, {SEED_NEWS.length} articles avec leur photo,
-        {" "}{SEED_GALLERY.length} photos de galerie, l’entreprise GBEDEL et une entrée de parcours. Tout est publié et vérifié, donc visible sur le site (≤ 1 minute).
+        {" "}{SEED_GALLERY.length} photos de galerie, l’entreprise GBEDEL et une entrée de parcours. Le profil et le texte d’accueil sont réécrits pour ne parler que de la personne (l’entreprise reste dans « Services » et « Organisations »). Tout est publié et vérifié, donc visible sur le site (≤ 1 minute).
       </p>
       <p className="mb-6 text-sm text-muted">Relancer l’import met à jour les mêmes éléments (pas de doublons) mais écrase les modifications faites sur eux depuis le dashboard.</p>
+      <label className="mb-5 flex items-start gap-2 text-sm">
+        <input type="checkbox" className="mt-1" checked={clean} onChange={(e) => setClean(e.target.checked)} />
+        <span>Supprimer les anciens éléments de « Services » qui ne font pas partie de la liste (ex. « Activités professionnelles »).</span>
+      </label>
       <button type="button" className="btn btn-primary" disabled={busy} onClick={run}>{busy ? "Import en cours…" : done ? "Relancer l’import" : "Lancer l’import"}</button>
       {err && <p role="alert" className="mt-4 text-sm text-red-700">{err}</p>}
       {done && <p role="status" className="mt-4 text-sm font-medium text-green-700">Import terminé. Les contenus sont en ligne.</p>}

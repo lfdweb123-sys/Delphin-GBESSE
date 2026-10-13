@@ -8,7 +8,7 @@ import { useT } from "./TextsProvider";
 
 function Cover({ src, alt }: { src?: string; alt: string }) {
   if (!src) return null;
-  return <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl bg-soft"><Image src={src} alt={alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" /></div>;
+  return <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl bg-soft"><Image src={src} alt={alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover object-top" /></div>;
 }
 function Ext({ url, label }: { url?: string; label: string }) {
   return url ? <a href={url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-medium text-accent underline-offset-4 hover:underline">{label}</a> : null;
@@ -50,7 +50,7 @@ export function ProjectCard({ p }: { p: Project | Achievement }) {
 /** Service : image à côté du texte (empilée sur mobile) + bouton d'appel à l'action vers la page contact. */
 export function ServiceCard({ s }: { s: Activity }) {
   const t = useT();
-  const href = s.url || "/contact";
+  const href = s.url || `/contact?sujet=${encodeURIComponent(`Service : ${s.title}`)}`;
   const ext = /^https?:\/\//.test(href);
   return (
     <article className="card flex flex-col overflow-hidden md:flex-row">

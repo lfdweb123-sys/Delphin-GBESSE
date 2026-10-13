@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Link href="/actualites" className="text-sm text-muted hover:text-ink">{t.label_back_news}</Link>
       <p className="mt-6 text-sm text-muted">{formatDate(n.date)}{n.category ? ` — ${n.category}` : ""}{n.author ? ` — ${n.author}` : ""}</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">{n.title}</h1>
-      {n.image && <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl bg-soft"><Image src={n.image} alt={n.title} fill priority sizes="(min-width:768px) 768px, 100vw" className="object-cover" /></div>}
+      {n.image && <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl bg-soft"><Image src={n.image} alt={n.title} fill priority sizes="(min-width:768px) 768px, 100vw" className="object-cover object-top" /></div>}
       <div className="prose-plain mt-8 whitespace-pre-line text-lg text-ink/90">{n.content}</div>
       {n.sourceUrl && <p className="mt-8 text-sm text-muted">{t.label_source} : <a className="text-accent hover:underline" href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.sourceName || n.sourceUrl}</a></p>}
     </article>

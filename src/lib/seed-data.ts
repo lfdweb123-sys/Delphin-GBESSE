@@ -9,7 +9,7 @@ export interface SeedDoc { id: string; data: Record<string, unknown> }
 const IMG = (key: string) => `@img:${key}`;
 
 export const SEED_IMAGES: SeedImage[] = [
-  "svc-import-export", "svc-materiaux", "svc-quincaillerie", "svc-bois", "svc-revetement", "svc-assainissement", "svc-machines",
+  "svc-ill-import-export", "svc-ill-materiaux", "svc-ill-quincaillerie", "svc-ill-bois", "svc-ill-batiment", "svc-ill-assainissement", "svc-ill-machines",
   "news-independance", "news-bacheliers", "news-conseiller", "news-candidat", "news-rentree", "news-dgiz", "news-debut-semaine",
   "news-fete-travail", "news-mi-semaine", "news-hommage-leader", "news-hommage-engage", "news-communaute-lacustre",
   "gal-bureau-1", "gal-bureau-2", "gal-bureau-3", "gal-ceremonie", "gal-chantier", "gal-rencontre-partenaire", "gal-reunion-affaires", "gal-portrait-costume",
@@ -18,24 +18,24 @@ export const SEED_IMAGES: SeedImage[] = [
 
 /** Services (collection `activities`). */
 export const SEED_SERVICES: SeedDoc[] = [
-  { id: "service-import-export", data: { order: "1", title: "Import-export", image: IMG("svc-import-export"),
+  { id: "service-import-export", data: { order: "1", title: "Import-export", image: IMG("svc-ill-import-export"),
     description: "Import-export de matériels, matériaux et marchandises : tout le nécessaire pour vos chantiers de construction, publics ou privés." } },
-  { id: "service-importation-materiaux", data: { order: "2", title: "Importation de matériels et matériaux de construction, boissons", image: IMG("svc-materiaux"),
+  { id: "service-importation-materiaux", data: { order: "2", title: "Importation de matériels et matériaux de construction, boissons", image: IMG("svc-ill-materiaux"),
     description: "Importation de matériels et de matériaux de construction, ainsi que de boissons." } },
-  { id: "service-quincaillerie-ciments", data: { order: "3", title: "Quincaillerie, achat et vente de ciments", image: IMG("svc-quincaillerie"),
+  { id: "service-quincaillerie-ciments", data: { order: "3", title: "Quincaillerie, achat et vente de ciments", image: IMG("svc-ill-quincaillerie"),
     description: "Quincailleries, achat et vente de ciments." } },
-  { id: "service-produits-forestiers", data: { order: "4", title: "Produits forestiers et tropicaux, menuiserie, scierie, BTP", image: IMG("svc-bois"),
+  { id: "service-produits-forestiers", data: { order: "4", title: "Produits forestiers et tropicaux, menuiserie, scierie, BTP", image: IMG("svc-ill-bois"),
     description: "Achat et vente des produits forestiers et tropicaux, menuiserie, scierie, BTP." } },
-  { id: "service-construction-revetement", data: { order: "5", title: "Construction et revêtement de bâtiments", image: IMG("svc-revetement"),
+  { id: "service-construction-revetement", data: { order: "5", title: "Construction et revêtement de bâtiments", image: IMG("svc-ill-batiment"),
     description: "Construction et revêtement de bâtiments." } },
-  { id: "service-assainissement-curage", data: { order: "6", title: "Assainissement et curage d’équipements", image: IMG("svc-assainissement"),
+  { id: "service-assainissement-curage", data: { order: "6", title: "Assainissement et curage d’équipements", image: IMG("svc-ill-assainissement"),
     description: "Assainissement et curage d’équipements." } },
-  { id: "service-machines-menuiserie-vitrerie", data: { order: "7", title: "Machines pour la menuiserie et la vitrerie", image: IMG("svc-machines"),
+  { id: "service-machines-menuiserie-vitrerie", data: { order: "7", title: "Machines pour la menuiserie et la vitrerie", image: IMG("svc-ill-machines"),
     description: "Achat et vente de toutes machines pour la menuiserie et la vitrerie." } },
 ];
 
 export const SEED_ORGANIZATIONS: SeedDoc[] = [
-  { id: "gbedel", data: { name: "GBEDEL", kind: "Entreprise", role: "Directeur Général", logo: IMG("logo-gbedel"),
+  { id: "gbedel", data: { name: "GBEDEL", kind: "Entreprise", role: "Commerce général, import-export et BTP", logo: IMG("logo-gbedel"),
     description: "Tout le nécessaire pour vos chantiers de construction, publics ou privés.\nNos engagements : qualité, prix compétitifs, disponibilité, rapidité, conseil, fiabilité." } },
 ];
 
@@ -326,3 +326,25 @@ La communauté lacustre.
 
 La vraie information sans besogne avec Mahugnon Firmin 96804302` } },
 ];
+
+/** Anciennes images de services (floues) à supprimer de Firestore lors de l'import. */
+export const OLD_IMAGE_IDS = ["seedsvcimportexport", "seedsvcmateriaux", "seedsvcquincaillerie", "seedsvcbois", "seedsvcrevetement", "seedsvcassainissement", "seedsvcmachines"];
+
+/**
+ * Séparation personne / entreprise : le profil, le héros et « À propos » parlent uniquement de Delphin GBESSE ;
+ * l'entreprise GBEDEL et ses prestations sont présentées dans « Services » et « Organisations ».
+ */
+const PRESENTATION =
+  "Delphin GBESSE, également connu sous le nom de Cherif Deen GBESSE, est conseiller communal de Sô-Ava. Coordonnateur du Bloc Républicain dans l'arrondissement de Ganvié 2, il a été candidat 1er titulaire du Bloc Républicain aux élections communales de janvier 2026.\n\nIl s'engage pour l'amélioration du cadre de vie, le renforcement des infrastructures de base, l'accompagnement des acteurs économiques locaux et la création d'opportunités pour la jeunesse de la commune lacustre de Sô-Ava.";
+export const PROFILE_UPDATE: Record<string, unknown> = {
+  roles: "Conseiller communal de Sô-Ava · Coordonnateur du Bloc Républicain, Ganvié 2",
+  shortBio: "Conseiller communal de Sô-Ava et coordonnateur du Bloc Républicain dans l'arrondissement de Ganvié 2, Delphin GBESSE s'engage pour le développement de la commune lacustre de Sô-Ava, de sa jeunesse et de son économie locale.",
+  presentation: PRESENTATION,
+  fullBio: PRESENTATION,
+  domains: "",
+  responsibilities: "Conseiller communal de Sô-Ava ; Coordonnateur du Bloc Républicain, arrondissement de Ganvié 2",
+};
+export const TEXTS_UPDATE: Record<string, string> = {
+  hero_subtitle: "Conseiller communal de Sô-Ava · Coordonnateur du Bloc Républicain, Ganvié 2",
+  hero_text: PROFILE_UPDATE.shortBio as string,
+};

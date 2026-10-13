@@ -67,7 +67,7 @@ export default async function Home() {
           </div>
           {profile?.photo && (
             <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-2xl border border-line sm:max-w-sm">
-              <Image src={profile.photo} alt={`Portrait de ${name}`} fill priority sizes="(min-width:768px) 30vw, 80vw" className="object-cover" />
+              <Image src={profile.photo} alt={`Portrait de ${name}`} fill priority sizes="(min-width:768px) 30vw, 80vw" className="object-cover object-top" />
             </div>
           )}
         </section>
@@ -77,7 +77,7 @@ export default async function Home() {
         <div className={`grid items-start gap-8 md:gap-12 ${aboutImage ? "md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" : ""}`}>
           {aboutImage && (
             <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line md:mx-0 md:max-w-none">
-              <Image src={aboutImage} alt={`À propos — ${name}`} fill sizes="(min-width:768px) 40vw, 90vw" className="object-cover" />
+              <Image src={aboutImage} alt={`À propos — ${name}`} fill sizes="(min-width:768px) 40vw, 90vw" className="object-cover object-top" />
             </div>
           )}
           <div>

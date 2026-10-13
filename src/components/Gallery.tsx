@@ -33,7 +33,7 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
         {shown.map((g, i) => (
           <li key={g.id}>
             <button type="button" onClick={() => setIdx(i)} aria-label={`Agrandir : ${g.alt}`} className="relative block aspect-square w-full overflow-hidden rounded-lg bg-soft">
-              <Image src={g.image} alt={g.alt} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw" loading="lazy" className="object-cover transition-transform duration-300 hover:scale-105" />
+              <Image src={g.image} alt={g.alt} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw" loading="lazy" className="object-cover object-top transition-transform duration-300 hover:scale-105" />
             </button>
           </li>
         ))}
