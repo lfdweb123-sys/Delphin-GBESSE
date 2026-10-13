@@ -348,3 +348,14 @@ export const TEXTS_UPDATE: Record<string, string> = {
   hero_subtitle: "Conseiller communal de Sô-Ava · Coordonnateur du Bloc Républicain, Ganvié 2",
   hero_text: PROFILE_UPDATE.shortBio as string,
 };
+
+/**
+ * Contenus génériques mélangeant la personne et l'entreprise (logo ou bannière en guise d'image), supprimés par l'import.
+ * Correspondance sur le début du titre (ou du nom), sans tenir compte de la casse ni des accents.
+ */
+export const GENERIC_DOCS: { col: string; field: string; starts: string[] }[] = [
+  { col: "news", field: "title", starts: ["delphin gbesse : un engagement en faveur du developpement"] },
+  { col: "timeline", field: "title", starts: ["delphin gbesse : un parcours d'entrepreneur", "delphin gbesse : un parcours d’entrepreneur"] },
+  { col: "achievements", field: "title", starts: ["realisations et contributions"] },
+  { col: "organizations", field: "name", starts: ["entreprises et organisations de delphin gbesse"] },
+];

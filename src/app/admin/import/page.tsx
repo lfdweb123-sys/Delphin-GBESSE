@@ -2,9 +2,10 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "@/lib/firebase";
-import { OLD_IMAGE_IDS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
+import { GENERIC_DOCS, OLD_IMAGE_IDS, PROFILE_UPDATE, SEED_GALLERY, SEED_IMAGES, SEED_NEWS, SEED_ORGANIZATIONS, SEED_SERVICES, SEED_TIMELINE, TEXTS_UPDATE, type SeedDoc } from "@/lib/seed-data";
 
 const imageId = (key: string) => `seed${key.replace(/[^A-Za-z0-9]/g, "")}`;
+const norm = (v: unknown) => String(v ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const toBase64 = (b: Blob): Promise<string> =>
   new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = () => rej(new Error("Lecture impossible")); r.readAsDataURL(b); });
 
@@ -60,6 +61,17 @@ export default function ImportPage() {
         let n = 0;
         for (const d of snap.docs) if (!keep.has(d.id)) { await deleteDoc(d.ref); n++; }
         add(`Anciens services supprimés : ${n}`);
+        let g = 0;
+        for (const x of GENERIC_DOCS) {
+          const keepIds = new Set(GROUPS.filter((gr) => gr.col === x.col).flatMap((gr) => gr.docs.map((d) => d.id)));
+          const s2 = await getDocs(collection(db, x.col));
+          for (const d of s2.docs) {
+            if (keepIds.has(d.id)) continue;
+            const v = norm(d.data()[x.field]);
+            if (x.starts.some((st) => v.startsWith(norm(st)))) { await deleteDoc(d.ref); g++; }
+          }
+        }
+        add(`Contenus génériques supprimés (actualité, parcours, réalisation, organisation) : ${g}`);
       }
       setDone(true);
     } catch (e) {
@@ -77,7 +89,7 @@ export default function ImportPage() {
       <p className="mb-6 text-sm text-muted">Relancer l’import met à jour les mêmes éléments (pas de doublons) mais écrase les modifications faites sur eux depuis le dashboard.</p>
       <label className="mb-5 flex items-start gap-2 text-sm">
         <input type="checkbox" className="mt-1" checked={clean} onChange={(e) => setClean(e.target.checked)} />
-        <span>Supprimer les anciens éléments de « Services » qui ne font pas partie de la liste (ex. « Activités professionnelles »).</span>
+        <span>Nettoyer : supprimer les anciens éléments de « Services » hors liste (ex. « Activités professionnelles ») et les contenus génériques qui mélangent la personne et l’entreprise (actualité « un engagement en faveur du développement », parcours « un parcours d’entrepreneur », réalisation « Réalisations et contributions », organisation « Entreprises et organisations de Delphin Gbesse »).</span>
       </label>
       <button type="button" className="btn btn-primary" disabled={busy} onClick={run}>{busy ? "Import en cours…" : done ? "Relancer l’import" : "Lancer l’import"}</button>
       {err && <p role="alert" className="mt-4 text-sm text-red-700">{err}</p>}
