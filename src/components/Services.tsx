@@ -60,11 +60,11 @@ export default function ServiceList({ items }: { items: Activity[] }) {
         })}
       </ol>
       {current && createPortal(
-        <div role="dialog" aria-modal="true" aria-label="Image du service" className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={close}>
+        <div role="dialog" aria-modal="true" aria-label="Image du service" className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 px-4 pb-14 pt-16" onClick={close}>
           <button type="button" onClick={close} aria-label="Fermer" className="absolute right-4 top-4 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">×</button>
           {zoomable.length > 1 && <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Service précédent" className="absolute left-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">‹</button>}
-          <figure className="relative h-[80vh] w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <Image src={current.image!} alt={current.title} fill sizes="100vw" className="object-contain" />
+          <figure className="relative h-full w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            <Image src={current.image!} alt={current.title} fill sizes="100vw" className="object-contain object-center" />
             <figcaption className="absolute inset-x-0 -bottom-9 text-center text-sm text-white">{current.title}</figcaption>
           </figure>
           {zoomable.length > 1 && <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Service suivant" className="absolute right-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">›</button>}

@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import type { NavItem } from "@/lib/nav";
+import { isActive, type NavItem } from "@/lib/nav";
 import Logo from "./Logo";
 import MobileDrawer from "./MobileDrawer";
 
 export default function Header({ name, logoUrl, nav }: { name: string; logoUrl?: string; nav: NavItem[] }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const close = useCallback(() => setOpen(false), []);
@@ -23,7 +25,8 @@ export default function Header({ name, logoUrl, nav }: { name: string; logoUrl?:
         <Logo logoUrl={logoUrl} name={name} size="header" />
         <nav aria-label="Navigation principale" className="hidden items-center gap-5 xl:flex">
           {nav.filter((n) => n.key !== "home").map((n) => (
-            <Link key={n.key} href={n.href} className="text-sm text-muted transition-colors hover:text-ink">{n.label}</Link>
+            <Link key={n.key} href={n.href} aria-current={isActive(pathname, n.href) ? "page" : undefined}
+              className={`border-b-2 py-1 text-sm transition-colors ${isActive(pathname, n.href) ? "border-gold font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}>{n.label}</Link>
           ))}
         </nav>
         <button

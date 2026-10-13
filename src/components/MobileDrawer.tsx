@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { NavItem } from "@/lib/nav";
+import { isActive, type NavItem } from "@/lib/nav";
 import Logo from "./Logo";
 
 interface Props { open: boolean; onClose: () => void; name: string; logoUrl?: string; nav: NavItem[] }
@@ -81,7 +81,7 @@ export default function MobileDrawer({ open, onClose, name, logoUrl, nav }: Prop
           <ul>
             {nav.map((n) => (
               <li key={n.key}>
-                <Link href={n.href} onClick={onClose} className="flex min-h-[52px] items-center rounded-lg px-3 text-lg text-ink hover:bg-soft">
+                <Link href={n.href} onClick={onClose} aria-current={isActive(pathname, n.href) ? "page" : undefined} className={`flex min-h-[52px] items-center rounded-lg border-l-4 px-3 text-lg text-ink hover:bg-soft ${isActive(pathname, n.href) ? "border-gold bg-soft font-semibold" : "border-transparent"}`}>
                   {n.label}
                 </Link>
               </li>

@@ -11,3 +11,7 @@ export const NAV_BASE = [
   { key: "contact", href: "/contact", label: "Contact" },
 ] as const;
 export interface NavItem { key: string; href: string; label: string }
+
+/** Vrai si `href` correspond à la page courante (ou à l'une de ses sous-pages, ex. /actualites/mon-article). */
+export const isActive = (pathname: string | null, href: string) =>
+  !!pathname && (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
