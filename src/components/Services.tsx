@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Activity } from "@/types";
 import { useT } from "./TextsProvider";
 
@@ -58,7 +59,7 @@ export default function ServiceList({ items }: { items: Activity[] }) {
           );
         })}
       </ol>
-      {current && (
+      {current && createPortal(
         <div role="dialog" aria-modal="true" aria-label="Image du service" className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={close}>
           <button type="button" onClick={close} aria-label="Fermer" className="absolute right-4 top-4 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">×</button>
           {zoomable.length > 1 && <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Service précédent" className="absolute left-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">‹</button>}
@@ -68,7 +69,7 @@ export default function ServiceList({ items }: { items: Activity[] }) {
           </figure>
           {zoomable.length > 1 && <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Service suivant" className="absolute right-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white hover:bg-white/20">›</button>}
         </div>
-      )}
+      , document.body)}
     </div>
   );
 }

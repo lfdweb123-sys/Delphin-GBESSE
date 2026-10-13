@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { GalleryItem } from "@/types";
 import { useT } from "./TextsProvider";
 
@@ -38,7 +39,7 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
           </li>
         ))}
       </ul>
-      {current && (
+      {current && createPortal(
         <div role="dialog" aria-modal="true" aria-label="Visionneuse d'images" className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={close}>
           <button type="button" onClick={close} aria-label="Fermer" className="absolute right-4 top-4 h-11 w-11 rounded-full bg-white/10 text-2xl text-white">×</button>
           <button type="button" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Image précédente" className="absolute left-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white">‹</button>
@@ -48,7 +49,7 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
           </figure>
           <button type="button" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Image suivante" className="absolute right-3 h-11 w-11 rounded-full bg-white/10 text-2xl text-white">›</button>
         </div>
-      )}
+      , document.body)}
     </div>
   );
 }
