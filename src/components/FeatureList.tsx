@@ -103,12 +103,12 @@ export function TimelineList({ items }: { items: TimelineEntry[] }) {
     href: contact("Parcours", x.title), secondary: x.url ? { href: x.url, label: t.label_source } : undefined,
   }))} />;
 }
-/** Réalisations : l'année sert de repère, résultat en information complémentaire. */
+/** Matériels (collection `achievements`) : numérotés ou datés, détails en information complémentaire. */
 export function AchievementFeatures({ items }: { items: Achievement[] }) {
   const t = useT();
   return <FeatureList items={items.map((a, i) => ({
     id: a.id, title: a.title, description: a.description, image: a.image, marker: a.date ? a.date.slice(0, 4) : String(i + 1).padStart(2, "0"), kicker: a.category,
-    dateLabel: a.date ? formatDate(a.date) : undefined, facts: a.result ? [{ label: "Résultat", value: a.result }] : undefined,
-    href: contact("Réalisation", a.title), secondary: a.url ? { href: a.url, label: t.label_more } : undefined,
+    dateLabel: a.date ? formatDate(a.date) : undefined, facts: a.result ? [{ label: "Détails", value: a.result }] : undefined,
+    href: contact("Matériel", a.title), secondary: a.url ? { href: a.url, label: t.label_more } : undefined,
   }))} />;
 }

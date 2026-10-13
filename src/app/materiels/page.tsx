@@ -6,9 +6,9 @@ import { pageMeta } from "@/lib/pagemeta";
 import type { Achievement } from "@/types";
 
 export const revalidate = 60;
-export const generateMetadata = () => pageMeta("realisations", "/realisations");
+export const generateMetadata = () => pageMeta("materiels", "/materiels");
 
 export default async function Page() {
   const [t, items] = await Promise.all([getTexts(), getPublic<Achievement>("achievements")]);
-  return <PageShell title={t.p_realisations_title} intro={t.p_realisations_intro} banner={t.p_realisations_banner}>{items.length ? <AchievementFeatures items={[...items].sort(byDateDesc)} /> : <Empty />}</PageShell>;
+  return <PageShell title={t.p_materiels_title} intro={t.p_materiels_intro} banner={t.p_materiels_banner}>{items.length ? <AchievementFeatures items={[...items].sort(byDateDesc)} /> : <Empty />}</PageShell>;
 }

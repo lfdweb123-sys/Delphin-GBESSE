@@ -34,6 +34,30 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // J'aime : un compteur public par article. Lecture libre ; +1 ou -1 uniquement, jamais négatif.
+    match /newsStats/{id} {
+      allow get: if true;
+      allow list, delete: if isAdmin();
+      allow create: if request.resource.data.keys().hasOnly(['likes']) && request.resource.data.likes == 1;
+      allow update: if request.resource.data.keys().hasOnly(['likes'])
+        && request.resource.data.likes is int
+        && request.resource.data.likes >= 0
+        && (request.resource.data.likes == resource.data.likes + 1 || request.resource.data.likes == resource.data.likes - 1);
+    }
+
+    // Commentaires : tout visiteur peut en proposer (statut « pending », taille limitée) ;
+    // seuls les commentaires approuvés par l'administrateur (« published ») sont lisibles par le public.
+    match /comments/{id} {
+      allow get, list: if resource.data.status == 'published' || isAdmin();
+      allow create: if request.resource.data.keys().hasOnly(['newsId', 'author', 'text', 'status', 'createdAt'])
+        && request.resource.data.status == 'pending'
+        && request.resource.data.newsId is string && request.resource.data.newsId.size() > 0 && request.resource.data.newsId.size() <= 160
+        && request.resource.data.author is string && request.resource.data.author.size() >= 2 && request.resource.data.author.size() <= 60
+        && request.resource.data.text is string && request.resource.data.text.size() >= 2 && request.resource.data.text.size() <= 1000
+        && request.resource.data.createdAt is string && request.resource.data.createdAt.size() <= 40;
+      allow update, delete: if isAdmin();
+    }
+
     // Sources : jamais publiques.
     match /sources/{id} {
       allow read, write: if isAdmin();

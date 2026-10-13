@@ -7,7 +7,7 @@ const YN = ["Oui", "Non"];
 
 const SECTIONS = [
   { k: "about", title: "À propos" },
-  { k: "timeline", title: "Parcours", more: "Voir tout le parcours" }, { k: "achievements", title: "Réalisations", more: "Toutes les réalisations" },
+  { k: "timeline", title: "Parcours", more: "Voir tout le parcours" }, { k: "achievements", title: "Matériels", more: "Tous les matériels" },
   { k: "activities", title: "Services", more: "Tous les services" },
   { k: "organizations", title: "Organisations" },
   { k: "news", title: "Actualités", more: "Toutes les actualités" }, { k: "gallery", title: "Galerie", more: "Voir la galerie" },
@@ -16,7 +16,7 @@ const SECTIONS = [
   { k: "contact", title: "Contact" },
 ];
 const PAGES = [
-  { k: "apropos", title: "À propos" }, { k: "parcours", title: "Parcours" }, { k: "realisations", title: "Réalisations" }, { k: "services", title: "Services" },
+  { k: "apropos", title: "À propos" }, { k: "parcours", title: "Parcours" }, { k: "materiels", title: "Matériels" }, { k: "services", title: "Services" },
   { k: "actualites", title: "Actualités" }, { k: "galerie", title: "Galerie" },
   { k: "collaboration", title: "Collaboration", intro: "Cette page s’adresse à toute structure souhaitant échanger sur une collaboration ou une opportunité de partenariat." },
   { k: "contact", title: "Contact" },

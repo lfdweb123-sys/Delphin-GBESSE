@@ -21,14 +21,20 @@ export default function Header({ name, logoUrl, nav }: { name: string; logoUrl?:
 
   return (
     <header className={`sticky top-0 z-40 bg-white transition-shadow ${scrolled ? "border-b border-line shadow-sm" : "border-b border-transparent"}`}>
-      <div className="container-x flex h-[72px] items-center justify-between gap-4 sm:h-20">
-        <Logo logoUrl={logoUrl} name={name} size="header" />
-        <nav aria-label="Navigation principale" className="hidden items-center gap-5 xl:flex">
-          {nav.filter((n) => n.key !== "home").map((n) => (
+      <div className="mx-auto flex h-[72px] w-full max-w-[88rem] items-center justify-between gap-4 px-4 sm:h-20 sm:px-6 xl:px-8">
+        <div className="shrink-0 xl:flex-1"><Logo logoUrl={logoUrl} name={name} size="header" /></div>
+        <nav aria-label="Navigation principale" className="hidden items-center justify-center gap-6 xl:flex">
+          {nav.filter((n) => n.key !== "home" && n.key !== "contact").map((n) => (
             <Link key={n.key} href={n.href} aria-current={isActive(pathname, n.href) ? "page" : undefined}
               className={`border-b-2 py-1 text-sm transition-colors ${isActive(pathname, n.href) ? "border-gold font-semibold text-ink" : "border-transparent text-muted hover:text-ink"}`}>{n.label}</Link>
           ))}
         </nav>
+        <div className="hidden xl:flex xl:flex-1 xl:justify-end">
+          {nav.filter((n) => n.key === "contact").map((n) => (
+            <Link key={n.key} href={n.href} aria-current={isActive(pathname, n.href) ? "page" : undefined}
+              className={`inline-flex min-h-[44px] items-center justify-center rounded-lg bg-black px-6 text-sm font-semibold text-white transition-colors hover:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${isActive(pathname, n.href) ? "ring-2 ring-gold ring-offset-2" : ""}`}>{n.label}</Link>
+          ))}
+        </div>
         <button
           type="button"
           onClick={() => setOpen(true)}

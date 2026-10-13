@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate, getNewsBySlug, getPublic, getTexts, siteUrl } from "@/lib/data";
+import NewsEngagement from "@/components/NewsEngagement";
 import type { NewsItem } from "@/types";
 
 export const revalidate = 60;
@@ -35,6 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       {n.image && <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl bg-soft"><Image src={n.image} alt={n.title} fill priority sizes="(min-width:768px) 768px, 100vw" className="object-cover object-top" /></div>}
       <div className="prose-plain mt-8 whitespace-pre-line text-lg text-ink/90">{n.content}</div>
       {n.sourceUrl && <p className="mt-8 text-sm text-muted">{t.label_source} : <a className="text-accent hover:underline" href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.sourceName || n.sourceUrl}</a></p>}
+      <NewsEngagement id={n.slug} title={n.title} path={`/actualites/${n.slug}`} />
     </article>
   );
 }

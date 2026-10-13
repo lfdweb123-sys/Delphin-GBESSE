@@ -6,7 +6,7 @@ import { REVIEWABLE } from "@/lib/admin-config";
 import { db } from "@/lib/firebase";
 
 const STATS = [
-  { label: "Réalisations", col: "achievements" }, { label: "Articles", col: "news" },
+  { label: "Matériels", col: "achievements" }, { label: "Articles", col: "news" },
   { label: "Services", col: "activities" }, { label: "Photos", col: "gallery" }, { label: "Sources", col: "sources" },
 ];
 

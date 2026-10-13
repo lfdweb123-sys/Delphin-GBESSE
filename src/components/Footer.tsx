@@ -10,7 +10,8 @@ import SocialLinks from "./SocialLinks";
 interface Props { name: string; logoUrl?: string; imageUrl?: string; links: SocialLink[]; nav: NavItem[]; t: Texts; profile: Profile | null }
 
 const gold = "transition-colors duration-200 hover:text-gold focus-visible:text-gold focus-visible:outline-gold";
-const labelCls = "block text-xs font-medium uppercase tracking-wide text-gold";
+const labelCls = "text-xs font-medium uppercase tracking-wide text-gold";
+const rowCls = "flex flex-wrap items-baseline gap-x-3 gap-y-1";
 
 export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile }: Props) {
   const phone = profile?.phone?.trim();
@@ -63,29 +64,29 @@ export default function Footer({ name, logoUrl, imageUrl, links, nav, t, profile
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t.footer_contact_title}</h2>
           {hasContact && (
-            <ul className="mt-4 space-y-4 text-sm text-white/70">
+            <ul className="mt-4 space-y-3 text-sm text-white/70">
               {phone && (
-                <li>
+                <li className={rowCls}>
                   <span className={labelCls}>{t.contact_phone_label}</span>
-                  <a href={`tel:${phone.replace(/\s/g, "")}`} className={`mt-1 inline-block ${gold}`}>{t.contact_call} →</a>
+                  <a href={`tel:${phone.replace(/\s/g, "")}`} className={`inline-block ${gold}`}>{t.contact_call} →</a>
                 </li>
               )}
               {wa && (
-                <li>
+                <li className={rowCls}>
                   <span className={labelCls}>{t.contact_whatsapp}</span>
-                  <a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`mt-1 inline-block ${gold}`}>{t.contact_whatsapp} →</a>
+                  <a href={`https://wa.me/${digits(wa)}`} target="_blank" rel="noopener noreferrer" className={`inline-block ${gold}`}>{t.contact_whatsapp} →</a>
                 </li>
               )}
               {mail && (
-                <li>
+                <li className={rowCls}>
                   <span className={labelCls}>{t.contact_email_label}</span>
-                  <a href={`mailto:${mail}`} className={`mt-1 inline-block ${gold}`}>{t.contact_mail} →</a>
+                  <a href={`mailto:${mail}`} className={`inline-block ${gold}`}>{t.contact_mail} →</a>
                 </li>
               )}
               {location && (
-                <li>
+                <li className={rowCls}>
                   <span className={labelCls}>{t.label_location}</span>
-                  <span className="mt-1 block leading-6">{location}</span>
+                  <span className="leading-6">{location}</span>
                 </li>
               )}
             </ul>

@@ -5,6 +5,7 @@ import Section from "@/components/Section";
 import Gallery from "@/components/Gallery";
 import SocialLinks from "@/components/SocialLinks";
 import ContactSection from "@/components/ContactSection";
+import FloatingActions from "@/components/FloatingActions";
 import FeatureList, { AchievementFeatures, ServiceList, TimelineList } from "@/components/FeatureList";
 import { aboutItems } from "@/lib/about";
 import { NewsCard, OrganizationCard } from "@/components/Cards";
@@ -74,7 +75,7 @@ export default async function Home() {
 
       {on("about") && aboutItems(profile, t, name).length > 0 && sec("about", "a-propos", "soft", <FeatureList items={aboutItems(profile, t, name)} />)}
       {on("timeline") && timeline.length > 0 && sec("timeline", undefined, "white", <><TimelineList items={[...timeline].sort(byDateAsc).slice(-5)} />{more("timeline", "/parcours")}</>)}
-      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><AchievementFeatures items={[...achievements].sort(byDateDesc).slice(0, 3)} />{more("achievements", "/realisations")}</>)}
+      {on("achievements") && achievements.length > 0 && sec("achievements", undefined, "soft", <><AchievementFeatures items={[...achievements].sort(byDateDesc).slice(0, 3)} />{more("achievements", "/materiels")}</>)}
       {on("activities") && activities.length > 0 && sec("activities", undefined, "white", <><ServiceList items={[...activities].sort(byOrder).slice(0, 4)} />{more("activities", "/services")}</>)}
       {on("organizations") && orgs.length > 0 && sec("organizations", undefined, "soft", <div className="grid gap-5 md:grid-cols-2">{orgs.map((o) => <OrganizationCard key={o.id} o={o} />)}</div>)}
       {on("news") && news.length > 0 && sec("news", undefined, "white", <><div className={grid}>{[...news].sort(byDateDesc).slice(0, 3).map((n) => <NewsCard key={n.id} n={n} />)}</div>{more("news", "/actualites")}</>)}
@@ -82,6 +83,7 @@ export default async function Home() {
       {on("socials") && socials.length > 0 && sec("socials", undefined, "white", <SocialLinks links={socials} />)}
       {on("collaboration") && sec("collaboration", undefined, "soft", <Link href="/collaboration" className="btn btn-primary">{t.collab_cta_label}</Link>)}
       {on("contact") && sec("contact", undefined, "white", <ContactSection profile={profile} links={socials} />)}
+      <FloatingActions whatsapp={profile?.whatsapp} />
     </>
   );
 }

@@ -79,9 +79,16 @@ export default function MobileDrawer({ open, onClose, name, logoUrl, nav }: Prop
         </div>
         <nav aria-label="Navigation mobile" className="flex-1 overflow-y-auto px-3 py-4">
           <ul>
-            {nav.map((n) => (
+            {nav.filter((n) => n.key !== "contact").map((n) => (
               <li key={n.key}>
                 <Link href={n.href} onClick={onClose} aria-current={isActive(pathname, n.href) ? "page" : undefined} className={`flex min-h-[52px] items-center rounded-lg border-l-4 px-3 text-lg text-ink hover:bg-soft ${isActive(pathname, n.href) ? "border-gold bg-soft font-semibold" : "border-transparent"}`}>
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+            {nav.filter((n) => n.key === "contact").map((n) => (
+              <li key={n.key} className="mt-4 px-1">
+                <Link href={n.href} onClick={onClose} aria-current={isActive(pathname, n.href) ? "page" : undefined} className="flex min-h-[52px] items-center justify-center rounded-lg bg-black text-lg font-semibold text-white hover:bg-accent">
                   {n.label}
                 </Link>
               </li>
