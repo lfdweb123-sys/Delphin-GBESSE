@@ -13,6 +13,7 @@ export default function NewsEngagement({ id, title, path }: { id: string; title:
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [copied, setCopied] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [canShare, setCanShare] = useState(false);
   const [author, setAuthor] = useState(""); const [text, setText] = useState(""); const [trap, setTrap] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null); const [busy, setBusy] = useState(false);
@@ -70,13 +71,20 @@ export default function NewsEngagement({ id, title, path }: { id: string; title:
           <svg width="18" height="18" viewBox="0 0 24 24" fill={liked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.500 12 21 12 21z" /></svg>
           J’aime{likes !== null && <span className="tabular-nums">· {likes}</span>}
         </button>
-        <span className="text-sm text-muted">Partager :</span>
-        {canShare && <button type="button" onClick={() => share("native")} className={btn}>Partager</button>}
-        <button type="button" onClick={() => share("wa")} className={btn}>WhatsApp</button>
-        <button type="button" onClick={() => share("fb")} className={btn}>Facebook</button>
-        <button type="button" onClick={() => share("x")} className={btn}>X</button>
-        <button type="button" onClick={() => share("copy")} className={btn} aria-live="polite">{copied ? "Lien copié ✓" : "Copier le lien"}</button>
+        <button type="button" onClick={() => setShareOpen((o) => !o)} aria-expanded={shareOpen} aria-controls="share-panel" className={`${btn} ${shareOpen ? "border-ink" : ""}`}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4" /></svg>
+          Partager
+        </button>
       </div>
+      {shareOpen && (
+        <div id="share-panel" role="group" aria-label="Partager cet article" className="mt-3 flex flex-wrap gap-2 rounded-xl bg-soft p-3">
+          <button type="button" onClick={() => share("wa")} className={btn}>WhatsApp</button>
+          <button type="button" onClick={() => share("fb")} className={btn}>Facebook</button>
+          <button type="button" onClick={() => share("x")} className={btn}>X</button>
+          {canShare && <button type="button" onClick={() => share("native")} className={btn}>Autres applications</button>}
+          <button type="button" onClick={() => share("copy")} className={btn} aria-live="polite">{copied ? "Lien copié ✓" : "Copier le lien"}</button>
+        </div>
+      )}
 
       <h2 className="mt-10 font-serif text-2xl font-semibold">Commentaires{comments.length > 0 && <span className="text-muted"> ({comments.length})</span>}</h2>
       {comments.length === 0 ? <p className="mt-3 text-sm text-muted">Soyez le premier à commenter.</p> : (

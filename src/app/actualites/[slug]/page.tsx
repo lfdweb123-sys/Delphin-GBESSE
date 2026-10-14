@@ -27,16 +27,34 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const ld = { "@context": "https://schema.org", "@type": "Article", headline: n.title, datePublished: n.date,
     ...(n.image ? { image: n.image } : {}), ...(n.author ? { author: { "@type": "Person", name: n.author } } : {}),
     mainEntityOfPage: `${siteUrl()}/actualites/${n.slug}` };
+  const meta = [formatDate(n.date), n.author].filter(Boolean);
   return (
-    <article className="container-x max-w-3xl animate-up py-14 sm:py-20">
+    <article className="mx-auto w-full max-w-6xl animate-up px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
-      <Link href="/actualites" className="text-sm text-muted hover:text-ink">{t.label_back_news}</Link>
-      <p className="mt-6 text-sm text-muted">{formatDate(n.date)}{n.category ? ` — ${n.category}` : ""}{n.author ? ` — ${n.author}` : ""}</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">{n.title}</h1>
-      {n.image && <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-xl bg-soft"><Image src={n.image} alt={n.title} fill priority sizes="(min-width:768px) 768px, 100vw" className="object-cover object-top" /></div>}
-      <div className="prose-plain mt-8 whitespace-pre-line text-lg text-ink/90">{n.content}</div>
-      {n.sourceUrl && <p className="mt-8 text-sm text-muted">{t.label_source} : <a className="text-accent hover:underline" href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.sourceName || n.sourceUrl}</a></p>}
-      <NewsEngagement id={n.slug} title={n.title} path={`/actualites/${n.slug}`} />
+      <nav aria-label="Fil d’Ariane" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-muted">
+        <Link href="/" className="hover:text-ink">Accueil</Link><span aria-hidden="true">/</span>
+        <Link href="/actualites" className="hover:text-ink">Actualités</Link><span aria-hidden="true">/</span>
+        <span className="line-clamp-1 text-ink" aria-current="page">{n.title}</span>
+      </nav>
+      <div className={n.image ? "grid items-start gap-8 lg:grid-cols-[5fr_7fr] lg:gap-14" : "mx-auto max-w-3xl"}>
+        {n.image && (
+          <figure className="lg:sticky lg:top-28 lg:self-start">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-soft shadow-lg ring-1 ring-black/5 sm:aspect-[16/11] lg:aspect-[4/5]">
+              <Image src={n.image} alt={n.title} fill priority sizes="(min-width:1024px) 42vw, 100vw" className="object-cover object-top" />
+            </div>
+          </figure>
+        )}
+        <div className="min-w-0">
+          {n.category && <span className="inline-block rounded-full bg-black px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold">{n.category}</span>}
+          <h1 className="mt-4 font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.6rem]">{n.title}</h1>
+          <p className="mt-4 text-sm text-muted">{meta.join("  ·  ")}</p>
+          <span className="mt-6 block h-0.5 w-16 bg-gold" aria-hidden="true" />
+          <div className="mt-8 whitespace-pre-line text-[1.05rem] leading-8 text-ink/90 sm:text-lg sm:leading-9">{n.content}</div>
+          {n.sourceUrl && <p className="mt-8 text-sm text-muted">{t.label_source} : <a className="text-accent hover:underline" href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.sourceName || n.sourceUrl}</a></p>}
+          <NewsEngagement id={n.slug} title={n.title} path={`/actualites/${n.slug}`} />
+          <Link href="/actualites" className="btn mt-10">{t.label_back_news}</Link>
+        </div>
+      </div>
     </article>
   );
 }

@@ -49,9 +49,10 @@ export default async function Home() {
     <>
       {banner ? (
         <section className="relative isolate overflow-hidden bg-ink text-white">
-          {bannerMobile && <Image src={bannerMobile} alt="" fill sizes="100vw" className="-z-10 object-cover opacity-60 md:hidden" />}
-          <Image src={banner} alt="" fill sizes="100vw" className={`-z-10 object-cover opacity-60 ${bannerMobile ? "hidden md:block" : ""}`} />
-          <div className="container-x animate-up py-20 sm:py-28 md:py-36">
+          {bannerMobile && <Image src={bannerMobile} alt="" fill sizes="100vw" className="-z-10 object-cover object-top opacity-60 md:hidden" />}
+          <Image src={banner} alt="" fill sizes="100vw" className={`-z-10 object-cover opacity-60 ${bannerMobile ? "hidden md:block object-center" : "object-top md:object-center"}`} />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/35 to-transparent md:hidden" aria-hidden="true" />
+          <div className="container-x animate-up pb-14 pt-[68vw] sm:py-28 md:py-36">
             <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">{heroTitle}</h1>
             {heroSub && <p className="mt-4 max-w-2xl text-lg text-white/90">{heroSub}</p>}
             {heroText && <p className="mt-5 max-w-xl whitespace-pre-line leading-7 text-white/85">{heroText}</p>}
