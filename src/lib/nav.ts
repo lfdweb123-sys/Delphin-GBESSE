@@ -3,6 +3,7 @@ export const NAV_BASE = [
   { key: "about", href: "/a-propos", label: "À propos" },
   { key: "parcours", href: "/parcours", label: "Parcours" },
   { key: "materiels", href: "/materiels", label: "Matériels" },
+  { key: "catalogue", href: "/catalogue", label: "Catalogue" },
   { key: "services", href: "/services", label: "Services" },
   { key: "actualites", href: "/actualites", label: "Actualités" },
   { key: "galerie", href: "/galerie", label: "Galerie" },

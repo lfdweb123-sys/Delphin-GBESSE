@@ -16,7 +16,7 @@ const SECTIONS = [
   { k: "contact", title: "Contact" },
 ];
 const PAGES = [
-  { k: "apropos", title: "À propos" }, { k: "parcours", title: "Parcours" }, { k: "materiels", title: "Matériels" }, { k: "services", title: "Services" },
+  { k: "apropos", title: "À propos" }, { k: "parcours", title: "Parcours" }, { k: "materiels", title: "Matériels" }, { k: "catalogue", title: "Catalogue", intro: "Découvrez nos articles et leurs caractéristiques." }, { k: "services", title: "Services" },
   { k: "actualites", title: "Actualités" }, { k: "galerie", title: "Galerie" },
   { k: "collaboration", title: "Collaboration", intro: "Cette page s’adresse à toute structure souhaitant échanger sur une collaboration ou une opportunité de partenariat." },
   { k: "contact", title: "Contact" },
